@@ -22,66 +22,66 @@ import mongoose from "mongoose"
 const MAX_STACK_HEIGHT = 200
 const MAX_USERNAME_LENGTH = 100
 const MAX_CHATMESSAGE_LENGTH = 1000
-const MONGODB_URI = "mongodb://localhost:27017/details"
+// const MONGODB_URI = "mongodb://localhost:27017/details"
 
 const rawdata = fs.readFileSync("grid.json")
 const mapMatrix = JSON.parse(rawdata.toString()).data
 
-mongoose.connect(MONGODB_URI, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-})
+// mongoose.connect(MONGODB_URI, {
+//   useUnifiedTopology: true,
+//   useNewUrlParser: true,
+// })
 
-const connection = mongoose.connection
-const MongoSchema = mongoose.Schema
-const message = new MongoSchema(
-  {
-    text: {
-      type: String,
-    },
-    uuid: {
-      type: String,
-    },
-    name: {
-      type: String,
-    },
-    username: {
-      type: String,
-    },
-    authenticaed: {
-      type: Boolean,
-    },
-    directed: {
-      type: Boolean,
-    },
-    directedTo: {
-      type: String,
-    },
-    msgId: {
-      type: String,
-    },
-    tint: {
-      type: String,
-    },
-    timestamp: {
-      type: Number,
-    },
-    room: {
-      type: Number,
-    },
-    removed: {
-      type: Boolean,
-    },
-  },
-  { collection: "Messages" }
-)
+// const connection = mongoose.connection
+// const MongoSchema = mongoose.Schema
+// const message = new MongoSchema(
+//   {
+//     text: {
+//       type: String,
+//     },
+//     uuid: {
+//       type: String,
+//     },
+//     name: {
+//       type: String,
+//     },
+//     username: {
+//       type: String,
+//     },
+//     authenticaed: {
+//       type: Boolean,
+//     },
+//     directed: {
+//       type: Boolean,
+//     },
+//     directedTo: {
+//       type: String,
+//     },
+//     msgId: {
+//       type: String,
+//     },
+//     tint: {
+//       type: String,
+//     },
+//     timestamp: {
+//       type: Number,
+//     },
+//     room: {
+//       type: Number,
+//     },
+//     removed: {
+//       type: Boolean,
+//     },
+//   },
+//   { collection: "Messages" }
+// )
 
-const MongoMessage = mongoose.model("Message", message)
+// const MongoMessage = mongoose.model("Message", message)
 
-console.log('connecting to mongo....')
-connection.once("open", () => {
-  console.log("MongoDB database connection established successfully")
-})
+// console.log('connecting to mongo....')
+// connection.once("open", () => {
+//   console.log("MongoDB database connection established successfully")
+// })
 
 // TILE TYPES =>
 // 0 = white
@@ -206,31 +206,31 @@ export class GameRoom extends Room {
 
     // __ Restore messages from database
     // __ 1 => GET LAST 20 MESSAGES (that are not removed and not broad- or narrowcast) sorted by timestamp
-    const restoreMessages = async () => {
-      console.log('Restoring messages...')
-      const messagesToRestore = await MongoMessage.find().sort({ timestamp: 'desc'});
-      // console.dir(messagesToRestore)
-      console.log('Number of messages:', messagesToRestore.length)
-      // // __ 2 => WRITE TO MESSAGE STATE
-      messagesToRestore.reverse().forEach((m: Message) => {
-        let newMessage = new Message()
-        newMessage.msgId = get(m, "msgId", "No msgId")
-        newMessage.text = get(m, 'text', '')
-        newMessage.name = get(m, "name", "No name")
-        newMessage.username = get(m, "username", "")
-        newMessage.directed = get(m, "directed", false)
-        newMessage.directedTo = get(m, "directedTo",'')
-        newMessage.authenticated = get(m, "authenticated",false)
-        newMessage.uuid = get(m, "uuid", "No UUID")
-        newMessage.tint = get(m, "tint", "No tint")
-        newMessage.room = get(m, "room", 2)
-        newMessage.timestamp = get(m, "timestamp", Date.now())
-        // console.log('==> Write message', m.msgId)
-        // console.dir(newMessage)
-        this.state.messages.push(newMessage)
-      })
-    }
-    restoreMessages()
+    // const restoreMessages = async () => {
+    //   console.log('Restoring messages...')
+    //   const messagesToRestore = await MongoMessage.find().sort({ timestamp: 'desc'});
+    //   // console.dir(messagesToRestore)
+    //   console.log('Number of messages:', messagesToRestore.length)
+    //   // // __ 2 => WRITE TO MESSAGE STATE
+    //   messagesToRestore.reverse().forEach((m: Message) => {
+    //     let newMessage = new Message()
+    //     newMessage.msgId = get(m, "msgId", "No msgId")
+    //     newMessage.text = get(m, 'text', '')
+    //     newMessage.name = get(m, "name", "No name")
+    //     newMessage.username = get(m, "username", "")
+    //     newMessage.directed = get(m, "directed", false)
+    //     newMessage.directedTo = get(m, "directedTo",'')
+    //     newMessage.authenticated = get(m, "authenticated",false)
+    //     newMessage.uuid = get(m, "uuid", "No UUID")
+    //     newMessage.tint = get(m, "tint", "No tint")
+    //     newMessage.room = get(m, "room", 2)
+    //     newMessage.timestamp = get(m, "timestamp", Date.now())
+    //     // console.log('==> Write message', m.msgId)
+    //     // console.dir(newMessage)
+    //     this.state.messages.push(newMessage)
+    //   })
+    // }
+    // restoreMessages()
 
     // __ Blacklist IP address
     this.onMessage("blacklist", (client, payload) => {
@@ -470,12 +470,12 @@ export class GameRoom extends Room {
           newMessage.timestamp = Date.now()
           this.state.messages.push(newMessage)
           // Write to DB
-          const messageToMongo = new MongoMessage(newMessage)
-          messageToMongo.save((err) => {
-            if (err) {
-              console.error(err)
-            }
-          })
+          // const messageToMongo = new MongoMessage(newMessage)
+          // messageToMongo.save((err) => {
+          //   if (err) {
+          //     console.error(err)
+          //   }
+          // })
         }
       } catch (err) {
         console.log(err)
