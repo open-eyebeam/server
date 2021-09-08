@@ -24,6 +24,8 @@ const MAX_USERNAME_LENGTH = 100
 const MAX_CHATMESSAGE_LENGTH = 1000
 // const MONGODB_URI = "mongodb://localhost:27017/details"
 
+const MAP = { WIDTH: 1000, HEIGHT: 1000 }
+
 const rawdata = fs.readFileSync("grid.json")
 const mapMatrix = JSON.parse(rawdata.toString()).data
 
@@ -123,6 +125,7 @@ class Waypoint extends Schema {
 }
 
 class Path extends Schema {
+  @type("boolean") keyboardNavigation: boolean
   @type([Waypoint]) waypoints = new ArraySchema<Waypoint>()
 }
 
@@ -280,6 +283,7 @@ export class GameRoom extends Room {
     // __ Move user to point
     this.onMessage("go", (client, message) => {
       // console.log('go recieved')
+      console.log(message)
       try {
         // __ Round target point
         // __ Make sure target point is within world bounds
@@ -288,14 +292,14 @@ export class GameRoom extends Room {
             get(message, "x", this.state.players[client.sessionId].x) / 10
           ) * 10,
           0,
-          4990
+          MAP.WIDTH - 10
         )
         let roundedY = clamp(
           Math.ceil(
             get(message, "y", this.state.players[client.sessionId].y) / 10
           ) * 10,
           0,
-          4990
+          MAP.HEIGHT - 10
         )
         let loResRoundedX = roundedX / 10
         let loResRoundedY = roundedY / 10
@@ -306,14 +310,14 @@ export class GameRoom extends Room {
             get(message, "originX", this.state.players[client.sessionId].x) / 10
           ) * 10,
           0,
-          4990
+          MAP.WIDTH - 10
         )
         let originY = clamp(
           Math.ceil(
             get(message, "originY", this.state.players[client.sessionId].y) / 10
           ) * 10,
           0,
-          4990
+          MAP.HEIGHT - 10
         )
         let loResOriginX = originX / 10
         let loResOriginY = originY / 10
@@ -359,6 +363,9 @@ export class GameRoom extends Room {
 
                 if (index == fullPath.waypoints.length - 1) {
                   let extendedPath = new Path()
+                  // Set keyboad navigation flag
+                  extendedPath.keyboardNavigation = get(message, "keyboardNavigation", false)
+                  console.log(message.keyboardNavigation)
                   for (let i = 0; i < finalPath.waypoints.length - 1; i++) {
                     extendedPath.waypoints.push(finalPath.waypoints[i])
                     for (let x = 1; x < 5; x++) {
@@ -386,6 +393,9 @@ export class GameRoom extends Room {
                       extendedPath.waypoints.push(tempPoint)
                     }
                   }
+
+                  console.log('extendedPath')
+                  console.log(extendedPath)
 
                   this.state.players[client.sessionId].x = currentWaypoint.x
                   this.state.players[client.sessionId].y = currentWaypoint.y
@@ -434,10 +444,10 @@ export class GameRoom extends Room {
         // __ Get random point until it is with in required color area
         while (true) {
           newX =
-            Math.ceil((Math.floor(Math.random() * (3950 - 50 + 1)) + 50) / 10) *
+            Math.ceil((Math.floor(Math.random() * (MAP.WIDTH - 50 + 1)) + 50) / 10) *
             10
           newY =
-            Math.ceil((Math.floor(Math.random() * (3950 - 50 + 1)) + 50) / 10) *
+            Math.ceil((Math.floor(Math.random() * (MAP.HEIGHT - 50 + 1)) + 50) / 10) *
             10
           if (mapMatrix[newY / 10][newX / 10] == colorIndex) break
         }
@@ -604,10 +614,10 @@ export class GameRoom extends Room {
         // __ Get point in start area
         while (true) {
           startX =
-            Math.ceil((Math.floor(Math.random() * (3950 - 50 + 1)) + 50) / 10) *
+            Math.ceil((Math.floor(Math.random() * ((MAP.WIDTH - 50) - 50 + 1)) + 50) / 10) *
             10
           startY =
-            Math.ceil((Math.floor(Math.random() * (3950 - 50 + 1)) + 50) / 10) *
+            Math.ceil((Math.floor(Math.random() * ((MAP.HEIGHT - 50) - 50 + 1)) + 50) / 10) *
             10
           // Spawn all in green area
           if (mapMatrix[startY / 10][startX / 10] == 4) break
