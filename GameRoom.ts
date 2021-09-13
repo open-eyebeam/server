@@ -24,7 +24,7 @@ const MAX_USERNAME_LENGTH = 100
 const MAX_CHATMESSAGE_LENGTH = 1000
 // const MONGODB_URI = "mongodb://localhost:27017/details"
 
-const MAP = { WIDTH: 1000, HEIGHT: 1000 }
+const MAP = { WIDTH: 500, HEIGHT: 500 }
 
 const rawdata = fs.readFileSync("grid.json")
 const mapMatrix = JSON.parse(rawdata.toString()).data
@@ -140,9 +140,11 @@ class Player extends Schema {
   @type("string") ip: string
   @type("string") avatar: string
   @type("boolean") connected: boolean
+  @type("boolean") onboarded: boolean
   @type("number") x: number
   @type("number") y: number
   @type("number") area: number
+  @type("string") room: string
   @type("boolean") authenticated: boolean
   @type("string") carrying: string
   @type(Path) path: Path = new Path()
@@ -176,7 +178,6 @@ class Message extends Schema {
   @type("number") timestamp: number
   @type("number") room: number
   @type("boolean") removed: boolean
-
 }
 
 class State extends Schema {
@@ -459,6 +460,16 @@ export class GameRoom extends Room {
       }
     })
 
+    // __ Change room
+    this.onMessage("changeRoom", (client, message) => {
+      console.log('CHANGE ROOM')
+      if (message.id) {
+        this.state.players[client.sessionId].room = message.id
+        this.state.players[client.sessionId].x = 400
+        this.state.players[client.sessionId].y = 100
+      }
+    })
+
     // __ Add chat message
     this.onMessage("submitChatMessage", (client, payload) => {
       try {
@@ -513,44 +524,6 @@ export class GameRoom extends Room {
         // Sentry.captureException(err)
       }
     })
-
-    // __ Pick up case study
-    // this.onMessage("pickUpCaseStudy", (client, payload) => {
-    //   try {
-    //     if(this.state.caseStudies[payload.uuid]) {
-    //       this.state.caseStudies[payload.uuid].carriedBy = client.sessionId
-    //       this.state.players[client.sessionId].carrying = payload.uuid
-    //       // __ Age by one unit
-    //       this.state.caseStudies[payload.uuid].age -= 1
-    //     }
-    //   } catch (err) {
-    //     console.log(err)
-    //     Sentry.captureException(err)
-    //   }
-    // })
-
-    // __ Drop case study
-    // this.onMessage("dropCaseStudy", (client, payload) => {
-    //   try {
-    //     if(this.state.caseStudies[payload.uuid]) {
-    //       this.state.players[client.sessionId].carrying = ""
-    //       if (this.state.caseStudies[payload.uuid].age == 0) {
-    //         delete this.state.caseStudies[payload.uuid]
-    //       } else {
-    //         this.state.caseStudies[payload.uuid].x =
-    //           this.state.players[client.sessionId].x + getRandomInt(-20, 20)
-    //         this.state.caseStudies[payload.uuid].y =
-    //           this.state.players[client.sessionId].y + getRandomInt(-20, 20)
-    //         this.state.caseStudies[payload.uuid].carriedBy = ""
-    //       }
-    //     } else {
-    //       console.log('!!! Case study does not exist')
-    //     }
-    //   } catch (err) {
-    //     console.log(err)
-    //     Sentry.captureException(err)
-    //   }
-    // })
   }
 
   // __ Authenticate user
@@ -674,6 +647,7 @@ export class GameRoom extends Room {
         this.state.players[client.sessionId].connected = true
         this.state.players[client.sessionId].x = startX
         this.state.players[client.sessionId].y = startY
+        this.state.players[client.sessionId].room = 'field'
         this.state.players[client.sessionId].area =
           mapMatrix[startY / 10][startX / 10]
       } catch (err) {
