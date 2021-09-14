@@ -134,6 +134,7 @@ class Player extends Schema {
   @type("boolean") npc: boolean
   @type("string") uuid: string
   @type("string") name: string
+  @type("string") shape: string
   @type("string") discourseName: string
   @type("string") slug: string
   @type("string") tint: string
@@ -468,6 +469,14 @@ export class GameRoom extends Room {
         this.state.players[client.sessionId].x = 400
         this.state.players[client.sessionId].y = 100
       }
+    })
+
+    // __ Onboard
+    this.onMessage("onboard", (client, message) => {
+      console.log('ONBOARD')
+      this.state.players[client.sessionId].name = message.username
+      this.state.players[client.sessionId].shape = message.shape
+      this.state.players[client.sessionId].onboarded = true
     })
 
     // __ Add chat message
