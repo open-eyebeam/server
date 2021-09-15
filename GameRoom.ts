@@ -468,6 +468,8 @@ export class GameRoom extends Room {
         this.state.players[client.sessionId].room = message.id
         this.state.players[client.sessionId].x = 400
         this.state.players[client.sessionId].y = 100
+        this.state.players[client.sessionId].path = new Path()
+        this.state.players[client.sessionId].fullPath = new Path()
       }
     })
 
@@ -654,6 +656,8 @@ export class GameRoom extends Room {
           "Undefined avatar id"
         )
         this.state.players[client.sessionId].connected = true
+        this.state.players[client.sessionId].onboarded = options.onboarded
+        this.state.players[client.sessionId].shape= options.shape
         this.state.players[client.sessionId].x = startX
         this.state.players[client.sessionId].y = startY
         this.state.players[client.sessionId].room = 'field'
