@@ -170,14 +170,12 @@ class Message extends Schema {
   @type("string") msgId: string
   @type("string") uuid: string
   @type("string") name: string
-  @type("string") username: string
   @type("boolean") authenticated: boolean
   @type("boolean") directed: boolean
   @type("string") directedTo: string
   @type("string") text: string
-  @type("string") tint: string
   @type("number") timestamp: number
-  @type("number") room: number
+  @type("string") room: string
   @type("boolean") removed: boolean
 }
 
@@ -492,13 +490,11 @@ export class GameRoom extends Room {
           newMessage.msgId = get(payload, "msgId", "No msgId")
           newMessage.text = payload.text.substring(0, MAX_CHATMESSAGE_LENGTH)
           newMessage.name = get(payload, "name", "No name")
-          newMessage.username = get(payload, "username", "")
           newMessage.directed = get(payload, "directed", false)
           newMessage.directedTo = get(payload, "directedTo",'')
           newMessage.authenticated = get(payload, "authenticated",false)
           newMessage.uuid = get(payload, "uuid", "No UUID")
-          newMessage.tint = get(payload, "tint", "No tint")
-          newMessage.room = get(payload, "room", 2)
+          newMessage.room = get(payload, "room", "field")
           newMessage.timestamp = Date.now()
           this.state.messages.push(newMessage)
           // Write to DB
