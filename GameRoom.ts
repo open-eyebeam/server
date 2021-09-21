@@ -24,6 +24,8 @@ const MAX_USERNAME_LENGTH = 100
 const MAX_CHATMESSAGE_LENGTH = 1000
 // const MONGODB_URI = "mongodb://localhost:27017/details"
 
+const FIELD_MAP = { WIDTH: 2000, HEIGHT: 2000 }
+const ROOM_MAP = { WIDTH: 500, HEIGHT: 500 }
 const MAP = { WIDTH: 500, HEIGHT: 500 }
 
 const rawdata = fs.readFileSync("grid.json")
@@ -195,9 +197,9 @@ const calculateDirection = (diffX: Number, diffY: Number) => {
   throw new Error("These differences are not valid: " + diffX + ", " + diffY)
 }
 
-// const getRandomInt = (min: number, max: number) =>
-//   Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) +
-//   Math.ceil(min)
+const getRandomInt = (min: number, max: number) =>
+  Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) +
+  Math.ceil(min)
 
 export class GameRoom extends Room {
   // __ Global settings
@@ -282,8 +284,10 @@ export class GameRoom extends Room {
 
     // __ Move user to point
     this.onMessage("go", (client, message) => {
-      // console.log('go recieved')
-      console.log(message)
+      // console.log('___ GOOOOO')
+      // console.log(message)
+      // console.log(this.state.players[client.sessionId].room)
+      let currentMAP = this.state.players[client.sessionId].room === 'field' ? FIELD_MAP : ROOM_MAP
       try {
         // __ Round target point
         // __ Make sure target point is within world bounds
@@ -292,14 +296,14 @@ export class GameRoom extends Room {
             get(message, "x", this.state.players[client.sessionId].x) / 10
           ) * 10,
           0,
-          MAP.WIDTH - 10
+          currentMAP.WIDTH - 10
         )
         let roundedY = clamp(
           Math.ceil(
             get(message, "y", this.state.players[client.sessionId].y) / 10
           ) * 10,
           0,
-          MAP.HEIGHT - 10
+          currentMAP.HEIGHT - 10
         )
         let loResRoundedX = roundedX / 10
         let loResRoundedY = roundedY / 10
@@ -310,14 +314,14 @@ export class GameRoom extends Room {
             get(message, "originX", this.state.players[client.sessionId].x) / 10
           ) * 10,
           0,
-          MAP.WIDTH - 10
+          currentMAP.WIDTH - 10
         )
         let originY = clamp(
           Math.ceil(
             get(message, "originY", this.state.players[client.sessionId].y) / 10
           ) * 10,
           0,
-          MAP.HEIGHT - 10
+          currentMAP.HEIGHT - 10
         )
         let loResOriginX = originX / 10
         let loResOriginY = originY / 10
@@ -428,44 +432,44 @@ export class GameRoom extends Room {
     })
 
     // __ Teleport user to point
-    this.onMessage("teleport", (client, message) => {
-      if (message.area) {
-        let newX = 0
-        let newY = 0
-        let colorIndex = 0
-        if (message.area == "green") colorIndex = 4
-        else if (message.area == "blue") colorIndex = 5
-        else if (message.area == "yellow") colorIndex = 2
-        else if (message.area == "red") colorIndex = 3
-        else if (message.area == "magenta") colorIndex = 6
-        else if (message.area == "cyan") colorIndex = 7
-        else if (message.area == "purple") colorIndex = 8
-        else if (message.area == "teal") colorIndex = 9
-        // __ Get random point until it is with in required color area
-        while (true) {
-          newX =
-            Math.ceil((Math.floor(Math.random() * (MAP.WIDTH - 50 + 1)) + 50) / 10) *
-            10
-          newY =
-            Math.ceil((Math.floor(Math.random() * (MAP.HEIGHT - 50 + 1)) + 50) / 10) *
-            10
-          if (mapMatrix[newY / 10][newX / 10] == colorIndex) break
-        }
-        this.state.players[client.sessionId].area = colorIndex
-        this.state.players[client.sessionId].path = new Path()
-        this.state.players[client.sessionId].fullPath = new Path()
-        this.state.players[client.sessionId].x = newX
-        this.state.players[client.sessionId].y = newY
-      }
-    })
+    // this.onMessage("teleport", (client, message) => {
+    //   if (message.area) {
+    //     let newX = 0
+    //     let newY = 0
+    //     let colorIndex = 0
+    //     if (message.area == "green") colorIndex = 4
+    //     else if (message.area == "blue") colorIndex = 5
+    //     else if (message.area == "yellow") colorIndex = 2
+    //     else if (message.area == "red") colorIndex = 3
+    //     else if (message.area == "magenta") colorIndex = 6
+    //     else if (message.area == "cyan") colorIndex = 7
+    //     else if (message.area == "purple") colorIndex = 8
+    //     else if (message.area == "teal") colorIndex = 9
+    //     // __ Get random point until it is with in required color area
+    //     while (true) {
+    //       newX =
+    //         Math.ceil((Math.floor(Math.random() * (MAP.WIDTH - 50 + 1)) + 50) / 10) *
+    //         10
+    //       newY =
+    //         Math.ceil((Math.floor(Math.random() * (MAP.HEIGHT - 50 + 1)) + 50) / 10) *
+    //         10
+    //       if (mapMatrix[newY / 10][newX / 10] == colorIndex) break
+    //     }
+    //     this.state.players[client.sessionId].area = colorIndex
+    //     this.state.players[client.sessionId].path = new Path()
+    //     this.state.players[client.sessionId].fullPath = new Path()
+    //     this.state.players[client.sessionId].x = newX
+    //     this.state.players[client.sessionId].y = newY
+    //   }
+    // })
 
     // __ Change room
     this.onMessage("changeRoom", (client, message) => {
       console.log('CHANGE ROOM')
       if (message.id) {
         this.state.players[client.sessionId].room = message.id
-        this.state.players[client.sessionId].x = 400
-        this.state.players[client.sessionId].y = 100
+        this.state.players[client.sessionId].x = message.id === 'field' ? 1000 : 400
+        this.state.players[client.sessionId].y = message.id === 'field' ? 1000 : 100
         this.state.players[client.sessionId].path = new Path()
         this.state.players[client.sessionId].fullPath = new Path()
       }
@@ -592,29 +596,8 @@ export class GameRoom extends Room {
         let startX = 0
         let startY = 0
         // __ Get point in start area
-        while (true) {
-          startX =
-            Math.ceil((Math.floor(Math.random() * ((MAP.WIDTH - 50) - 50 + 1)) + 50) / 10) *
-            10
-          startY =
-            Math.ceil((Math.floor(Math.random() * ((MAP.HEIGHT - 50) - 50 + 1)) + 50) / 10) *
-            10
-          // Spawn all in green area
-          if (mapMatrix[startY / 10][startX / 10] == 4) break
-        }
-
-        // let randomAdjective = sample(RANDOM_WORDS)
-        // randomAdjective =
-        //   randomAdjective.charAt(0).toUpperCase() + randomAdjective.slice(1)
-        // const userName =
-        //   (!get(options, "authenticated", false) && !get(options, "npc", false)
-        //     ? randomAdjective + " "
-        //     : "") +
-        //   get(options, "name", "Undefined name").substring(
-        //     0,
-        //     MAX_USERNAME_LENGTH
-        //   )
-
+        startX = getRandomInt(800, 1200)
+        startY = getRandomInt(800, 1200)
         const userName = get(options, "name", "Undefined name").substring(
             0,
             MAX_USERNAME_LENGTH
