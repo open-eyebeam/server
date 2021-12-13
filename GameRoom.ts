@@ -22,11 +22,9 @@ import mongoose from "mongoose"
 const MAX_STACK_HEIGHT = 200
 const MAX_USERNAME_LENGTH = 100
 const MAX_CHATMESSAGE_LENGTH = 1000
-// const MONGODB_URI = "mongodb://localhost:27017/details"
 
 const FIELD_MAP = { WIDTH: 2000, HEIGHT: 2000 }
 const ROOM_MAP = { WIDTH: 500, HEIGHT: 500 }
-const MAP = { WIDTH: 500, HEIGHT: 500 }
 
 const rawdata = fs.readFileSync("grid.json")
 const mapMatrix = JSON.parse(rawdata.toString()).data
@@ -131,15 +129,22 @@ class Path extends Schema {
   @type([Waypoint]) waypoints = new ArraySchema<Waypoint>()
 }
 
+class Pop extends Schema {
+  @type("string") msgId: string
+  @type("string") uuid: string
+  @type("string") name: string
+  @type("string") text: string
+  @type("number") timestamp: number
+  @type("boolean") removed: boolean
+}
+
 class Player extends Schema {
   @type("boolean") moderator: boolean
   @type("boolean") npc: boolean
   @type("string") uuid: string
   @type("string") name: string
   @type("string") shape: string
-  @type("string") discourseName: string
   @type("string") slug: string
-  @type("string") tint: string
   @type("string") ip: string
   @type("string") avatar: string
   @type("boolean") connected: boolean
@@ -150,6 +155,7 @@ class Player extends Schema {
   @type("string") room: string
   @type("boolean") authenticated: boolean
   @type("string") carrying: string
+  @type("string") pop: string
   @type(Path) path: Path = new Path()
   @type(Path) fullPath: Path = new Path()
 }
@@ -160,7 +166,6 @@ class CaseStudy extends Schema {
   @type("string") name: string
   @type("string") slug: string
   @type("string") category: string
-  @type("number") tint: number
   @type("number") age: number
   @type("number") x: number
   @type("number") y: number
@@ -287,7 +292,7 @@ export class GameRoom extends Room {
       // console.log('___ GOOOOO')
       // console.log(message)
       // console.log(this.state.players[client.sessionId].room)
-      let currentMAP = this.state.players[client.sessionId].room === 'field' ? FIELD_MAP : ROOM_MAP
+      let currentMAP = FIELD_MAP
       try {
         // __ Round target point
         // __ Make sure target point is within world bounds
@@ -466,12 +471,21 @@ export class GameRoom extends Room {
     // __ Change room
     this.onMessage("changeRoom", (client, message) => {
       console.log('CHANGE ROOM')
+      console.log(message)
       if (message.id) {
+
+        let teleportWaypoint = new Waypoint(
+          message.x,
+          message.y,
+        )
+        let teleportPath = new Path()
+        teleportPath.waypoints.push(teleportWaypoint)
+
         this.state.players[client.sessionId].room = message.id
-        this.state.players[client.sessionId].x = message.id === 'field' ? 1000 : 400
-        this.state.players[client.sessionId].y = message.id === 'field' ? 1000 : 100
-        this.state.players[client.sessionId].path = new Path()
-        this.state.players[client.sessionId].fullPath = new Path()
+        this.state.players[client.sessionId].x = message.x
+        this.state.players[client.sessionId].y = message.y
+        this.state.players[client.sessionId].path = teleportPath
+        this.state.players[client.sessionId].fullPath = teleportPath
       }
     })
 
@@ -495,8 +509,8 @@ export class GameRoom extends Room {
           newMessage.text = payload.text.substring(0, MAX_CHATMESSAGE_LENGTH)
           newMessage.name = get(payload, "name", "No name")
           newMessage.directed = get(payload, "directed", false)
-          newMessage.directedTo = get(payload, "directedTo",'')
-          newMessage.authenticated = get(payload, "authenticated",false)
+          newMessage.directedTo = get(payload, "directedTo", '')
+          newMessage.authenticated = get(payload, "authenticated", false)
           newMessage.uuid = get(payload, "uuid", "No UUID")
           newMessage.room = get(payload, "room", "field")
           newMessage.timestamp = Date.now()
@@ -535,6 +549,41 @@ export class GameRoom extends Room {
         // Sentry.captureException(err)
       }
     })
+
+    // __ Add Pop message
+    this.onMessage("submitPopMessage", (client, payload) => {
+      try {
+        if (payload.text && payload.text.length > 0) {
+          this.state.players[client.sessionId].pop = payload.text.substring(0, MAX_CHATMESSAGE_LENGTH)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    })
+
+    // __ Remove Pop message
+    // this.onMessage("removePopMessage", (client, payload) => {
+    //   try {
+    //     console.dir(payload)
+    //     let targetPop = this.state.pops.find((p: Pop) => p.msgId == payload.msgId)
+    //     console.dir(targetPop)
+    //     targetPop.pop.removed = true
+    //     // let targetPopIndex = this.state.pops.findIndex(
+    //     //   (p: Pop) => p == targetPop
+    //     // )
+
+
+    //     // console.log(targetPopIndex)
+    //     // if (isNumber(targetMessageIndex)) {
+    //     //   this.state.messages.splice(targetMessageIndex, 1)
+    //     //   // !!! TODO: MARK MESSAGE AS REMOVED IN DATABASE
+    //     //   this.broadcast("nukeMessage", targetMessage.msgId);
+    //     // }
+    //   } catch (err) {
+    //     console.log(err)
+    //     // Sentry.captureException(err)
+    //   }
+    // })
   }
 
   // __ Authenticate user
@@ -579,7 +628,7 @@ export class GameRoom extends Room {
         //     reject(); // discourse auth failed
         //   }
         // } else {
-        resolve(true); 
+        resolve(true);
         // }
       } else {
         console.log("BANNED")
@@ -593,35 +642,30 @@ export class GameRoom extends Room {
     // __ Make exception for moderator dashboard user
     if (!options.moderator) {
       try {
-        let startX = 0
-        let startY = 0
-        // __ Get point in start area
-        startX = getRandomInt(800, 1200)
-        startY = getRandomInt(800, 1200)
+        let startX = get(
+          options,
+          "x",
+          200
+        )
+        let startY = get(
+          options,
+          "y",
+          200
+        )
         const userName = get(options, "name", "Undefined name").substring(
-            0,
-            MAX_USERNAME_LENGTH
-          )
+          0,
+          MAX_USERNAME_LENGTH
+        )
 
         this.state.players[client.sessionId] = new Player()
         this.state.players[client.sessionId].authenticated =
           options.authenticated || false
         this.state.players[client.sessionId].npc = options.npc || false
-        this.state.players[client.sessionId].tint = get(
-          options,
-          "tint",
-          "0XFF0000"
-        )
         this.state.players[client.sessionId].name = userName
         this.state.players[client.sessionId].slug = get(
           options,
           "slug",
           "no-slug"
-        )
-        this.state.players[client.sessionId].discourseName = get(
-          options,
-          "discourseName",
-          "no-discourse-name"
         )
         this.state.players[client.sessionId].uuid = get(
           options,
@@ -636,12 +680,14 @@ export class GameRoom extends Room {
         )
         this.state.players[client.sessionId].connected = true
         this.state.players[client.sessionId].onboarded = options.onboarded
-        this.state.players[client.sessionId].shape= options.shape
+        this.state.players[client.sessionId].shape = options.shape
         this.state.players[client.sessionId].x = startX
         this.state.players[client.sessionId].y = startY
-        this.state.players[client.sessionId].room = 'field'
-        this.state.players[client.sessionId].area =
-          mapMatrix[startY / 10][startX / 10]
+        this.state.players[client.sessionId].room = get(
+          options,
+          "room",
+          "NO ROOM"
+        )
       } catch (err) {
         console.log(err)
         // Sentry.captureException(err)
