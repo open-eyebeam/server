@@ -129,15 +129,6 @@ class Path extends Schema {
   @type([Waypoint]) waypoints = new ArraySchema<Waypoint>()
 }
 
-class Pop extends Schema {
-  @type("string") msgId: string
-  @type("string") uuid: string
-  @type("string") name: string
-  @type("string") text: string
-  @type("number") timestamp: number
-  @type("boolean") removed: boolean
-}
-
 class Player extends Schema {
   @type("boolean") moderator: boolean
   @type("boolean") npc: boolean
@@ -155,6 +146,7 @@ class Player extends Schema {
   @type("string") room: string
   @type("boolean") authenticated: boolean
   @type("string") carrying: string
+  @type("string") viewing: string
   @type("string") pop: string
   @type(Path) path: Path = new Path()
   @type(Path) fullPath: Path = new Path()
@@ -289,151 +281,158 @@ export class GameRoom extends Room {
 
     // __ Move user to point
     this.onMessage("go", (client, message) => {
-      // console.log('___ GOOOOO')
-      // console.log(message)
+      console.log('___ GOOOOO')
+      console.log(message)
+
+      this.state.players[client.sessionId].x = message.x
+      this.state.players[client.sessionId].y = message.y
+      // this.state.players[client.sessionId].area = currentWaypoint.area
+      // this.state.players[client.sessionId].path = extendedPath
+      // this.state.players[client.sessionId].fullPath = fullPath
+
       // console.log(this.state.players[client.sessionId].room)
-      let currentMAP = FIELD_MAP
-      try {
-        // __ Round target point
-        // __ Make sure target point is within world bounds
-        let roundedX = clamp(
-          Math.ceil(
-            get(message, "x", this.state.players[client.sessionId].x) / 10
-          ) * 10,
-          0,
-          currentMAP.WIDTH - 10
-        )
-        let roundedY = clamp(
-          Math.ceil(
-            get(message, "y", this.state.players[client.sessionId].y) / 10
-          ) * 10,
-          0,
-          currentMAP.HEIGHT - 10
-        )
-        let loResRoundedX = roundedX / 10
-        let loResRoundedY = roundedY / 10
-        // __ Round origin point
-        // __ Make sure origin point is within world bounds
-        let originX = clamp(
-          Math.ceil(
-            get(message, "originX", this.state.players[client.sessionId].x) / 10
-          ) * 10,
-          0,
-          currentMAP.WIDTH - 10
-        )
-        let originY = clamp(
-          Math.ceil(
-            get(message, "originY", this.state.players[client.sessionId].y) / 10
-          ) * 10,
-          0,
-          currentMAP.HEIGHT - 10
-        )
-        let loResOriginX = originX / 10
-        let loResOriginY = originY / 10
-        // __ Set up pathfinding
-        easystar.findPath(
-          loResOriginX,
-          loResOriginY,
-          loResRoundedX,
-          loResRoundedY,
-          path => {
-            if (path === null || path.length == 0) {
-              client.send("illegalMove", "No path found")
-            } else {
-              let fullPath = new Path()
-              path.forEach(wp => {
-                fullPath.waypoints.push(
-                  new Waypoint(wp.x * 10, wp.y * 10, mapMatrix[wp.y][wp.x])
-                )
-              })
-              const SIMPLIFICATION_FACTOR = 1
-              let finalPath = new Path()
+      // let currentMAP = FIELD_MAP
+      // try {
+      //   // __ Round target point
+      //   // __ Make sure target point is within world bounds
+      //   let roundedX = clamp(
+      //     Math.ceil(
+      //       get(message, "x", this.state.players[client.sessionId].x) / 10
+      //     ) * 10,
+      //     0,
+      //     currentMAP.WIDTH - 10
+      //   )
+      //   let roundedY = clamp(
+      //     Math.ceil(
+      //       get(message, "y", this.state.players[client.sessionId].y) / 10
+      //     ) * 10,
+      //     0,
+      //     currentMAP.HEIGHT - 10
+      //   )
+      //   let loResRoundedX = roundedX / 10
+      //   let loResRoundedY = roundedY / 10
+      //   // __ Round origin point
+      //   // __ Make sure origin point is within world bounds
+      //   let originX = clamp(
+      //     Math.ceil(
+      //       get(message, "originX", this.state.players[client.sessionId].x) / 10
+      //     ) * 10,
+      //     0,
+      //     currentMAP.WIDTH - 10
+      //   )
+      //   let originY = clamp(
+      //     Math.ceil(
+      //       get(message, "originY", this.state.players[client.sessionId].y) / 10
+      //     ) * 10,
+      //     0,
+      //     currentMAP.HEIGHT - 10
+      //   )
+      //   let loResOriginX = originX / 10
+      //   let loResOriginY = originY / 10
+      //   // __ Set up pathfinding
+      //   easystar.findPath(
+      //     loResOriginX,
+      //     loResOriginY,
+      //     loResRoundedX,
+      //     loResRoundedY,
+      //     path => {
+      //       if (path === null || path.length == 0) {
+      //         client.send("illegalMove", "No path found")
+      //       } else {
+      //         let fullPath = new Path()
+      //         path.forEach(wp => {
+      //           fullPath.waypoints.push(
+      //             new Waypoint(wp.x * 10, wp.y * 10, mapMatrix[wp.y][wp.x])
+      //           )
+      //         })
+      //         const SIMPLIFICATION_FACTOR = 1
+      //         let finalPath = new Path()
 
-              const processPath = (index = 0) => {
-                const nextIndex =
-                  index + SIMPLIFICATION_FACTOR >= fullPath.waypoints.length - 1
-                    ? fullPath.waypoints.length - 1
-                    : index + SIMPLIFICATION_FACTOR
-                const prevIndex = index == 0 ? 0 : index - SIMPLIFICATION_FACTOR
+      //         const processPath = (index = 0) => {
+      //           const nextIndex =
+      //             index + SIMPLIFICATION_FACTOR >= fullPath.waypoints.length - 1
+      //               ? fullPath.waypoints.length - 1
+      //               : index + SIMPLIFICATION_FACTOR
+      //           const prevIndex = index == 0 ? 0 : index - SIMPLIFICATION_FACTOR
 
-                let currentWaypoint = new Waypoint(
-                  fullPath.waypoints[index].x,
-                  fullPath.waypoints[index].y,
-                  fullPath.waypoints[index].area
-                )
-                // __ Calculate direction
-                const delta_x =
-                  currentWaypoint.x - fullPath.waypoints[prevIndex].x
-                const delta_y =
-                  fullPath.waypoints[prevIndex].y - currentWaypoint.y
-                currentWaypoint.direction = calculateDirection(delta_x, delta_y)
+      //           let currentWaypoint = new Waypoint(
+      //             fullPath.waypoints[index].x,
+      //             fullPath.waypoints[index].y,
+      //             fullPath.waypoints[index].area
+      //           )
+      //           // __ Calculate direction
+      //           const delta_x =
+      //             currentWaypoint.x - fullPath.waypoints[prevIndex].x
+      //           const delta_y =
+      //             fullPath.waypoints[prevIndex].y - currentWaypoint.y
+      //           currentWaypoint.direction = calculateDirection(delta_x, delta_y)
 
-                finalPath.waypoints.push(currentWaypoint)
+      //           finalPath.waypoints.push(currentWaypoint)
 
-                if (index == fullPath.waypoints.length - 1) {
-                  let extendedPath = new Path()
-                  // Set keyboad navigation flag
-                  extendedPath.keyboardNavigation = get(message, "keyboardNavigation", false)
-                  console.log(message.keyboardNavigation)
-                  for (let i = 0; i < finalPath.waypoints.length - 1; i++) {
-                    extendedPath.waypoints.push(finalPath.waypoints[i])
-                    for (let x = 1; x < 5; x++) {
-                      let tempPoint = new Waypoint(
-                        finalPath.waypoints[i].x,
-                        finalPath.waypoints[i].y,
-                        finalPath.waypoints[i].area,
-                        finalPath.waypoints[i + 1].direction
-                      )
-                      if (finalPath.waypoints[i + 1].direction == "back") {
-                        tempPoint.y = tempPoint.y - 2 * x
-                      } else if (
-                        finalPath.waypoints[i + 1].direction == "front"
-                      ) {
-                        tempPoint.y = tempPoint.y + 2 * x
-                      } else if (
-                        finalPath.waypoints[i + 1].direction == "right"
-                      ) {
-                        tempPoint.x = tempPoint.x + 2 * x
-                      } else if (
-                        finalPath.waypoints[i + 1].direction == "left"
-                      ) {
-                        tempPoint.x = tempPoint.x - 2 * x
-                      }
-                      extendedPath.waypoints.push(tempPoint)
-                    }
-                  }
+      //           if (index == fullPath.waypoints.length - 1) {
+      //             let extendedPath = new Path()
+      //             // Set keyboad navigation flag
+      //             extendedPath.keyboardNavigation = get(message, "keyboardNavigation", false)
+      //             console.log(message.keyboardNavigation)
+      //             for (let i = 0; i < finalPath.waypoints.length - 1; i++) {
+      //               extendedPath.waypoints.push(finalPath.waypoints[i])
+      //               for (let x = 1; x < 5; x++) {
+      //                 let tempPoint = new Waypoint(
+      //                   finalPath.waypoints[i].x,
+      //                   finalPath.waypoints[i].y,
+      //                   finalPath.waypoints[i].area,
+      //                   finalPath.waypoints[i + 1].direction
+      //                 )
+      //                 if (finalPath.waypoints[i + 1].direction == "back") {
+      //                   tempPoint.y = tempPoint.y - 2 * x
+      //                 } else if (
+      //                   finalPath.waypoints[i + 1].direction == "front"
+      //                 ) {
+      //                   tempPoint.y = tempPoint.y + 2 * x
+      //                 } else if (
+      //                   finalPath.waypoints[i + 1].direction == "right"
+      //                 ) {
+      //                   tempPoint.x = tempPoint.x + 2 * x
+      //                 } else if (
+      //                   finalPath.waypoints[i + 1].direction == "left"
+      //                 ) {
+      //                   tempPoint.x = tempPoint.x - 2 * x
+      //                 }
+      //                 extendedPath.waypoints.push(tempPoint)
+      //               }
+      //             }
 
-                  console.log('extendedPath')
-                  console.log(extendedPath)
+      //             console.log('extendedPath')
+      //             console.log(extendedPath)
 
-                  this.state.players[client.sessionId].x = currentWaypoint.x
-                  this.state.players[client.sessionId].y = currentWaypoint.y
-                  this.state.players[client.sessionId].area = currentWaypoint.area
-                  this.state.players[client.sessionId].path = extendedPath
-                  this.state.players[client.sessionId].fullPath = fullPath
+      //             this.state.players[client.sessionId].x = currentWaypoint.x
+      //             this.state.players[client.sessionId].y = currentWaypoint.y
+      //             this.state.players[client.sessionId].area = currentWaypoint.area
+      //             this.state.players[client.sessionId].path = extendedPath
+      //             this.state.players[client.sessionId].fullPath = fullPath
 
-                  // console.dir(extendedPath.waypoints)
+      //             // console.dir(extendedPath.waypoints)
 
-                  return
-                } else {
-                  processPath(nextIndex)
-                }
-              }
+      //             return
+      //           } else {
+      //             processPath(nextIndex)
+      //           }
+      //         }
 
-              if (fullPath.waypoints.length > 0) {
-                processPath(0)
-              } else {
-                client.send("illegalMove", "Empty full path")
-              }
-            }
-          }
-        )
-        // __ Calculate path
-        easystar.calculate()
-      } catch (err) {
-        console.log(err)
-        // Sentry.captureException(err)
-      }
+      //         if (fullPath.waypoints.length > 0) {
+      //           processPath(0)
+      //         } else {
+      //           client.send("illegalMove", "Empty full path")
+      //         }
+      //       }
+      //     }
+      //   )
+      //   // __ Calculate path
+      //   easystar.calculate()
+      // } catch (err) {
+      //   console.log(err)
+      //   // Sentry.captureException(err)
+      // }
     })
 
     // __ Teleport user to point
@@ -487,6 +486,21 @@ export class GameRoom extends Room {
         this.state.players[client.sessionId].path = teleportPath
         this.state.players[client.sessionId].fullPath = teleportPath
       }
+    })
+
+    // __ Enter Article
+    this.onMessage("enterArticle", (client, message) => {
+      console.log('ENTER ARTICLE')
+      console.log(message)
+      if (message.id) {
+        this.state.players[client.sessionId].viewing = message.id
+      }
+    })
+
+    // __ Leave Article
+    this.onMessage("leaveArticle", (client, message) => {
+      console.log('LEAVE ARTICLE')
+      this.state.players[client.sessionId].viewing = ''
     })
 
     // __ Onboard
@@ -549,41 +563,6 @@ export class GameRoom extends Room {
         // Sentry.captureException(err)
       }
     })
-
-    // __ Add Pop message
-    this.onMessage("submitPopMessage", (client, payload) => {
-      try {
-        if (payload.text && payload.text.length > 0) {
-          this.state.players[client.sessionId].pop = payload.text.substring(0, MAX_CHATMESSAGE_LENGTH)
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    })
-
-    // __ Remove Pop message
-    // this.onMessage("removePopMessage", (client, payload) => {
-    //   try {
-    //     console.dir(payload)
-    //     let targetPop = this.state.pops.find((p: Pop) => p.msgId == payload.msgId)
-    //     console.dir(targetPop)
-    //     targetPop.pop.removed = true
-    //     // let targetPopIndex = this.state.pops.findIndex(
-    //     //   (p: Pop) => p == targetPop
-    //     // )
-
-
-    //     // console.log(targetPopIndex)
-    //     // if (isNumber(targetMessageIndex)) {
-    //     //   this.state.messages.splice(targetMessageIndex, 1)
-    //     //   // !!! TODO: MARK MESSAGE AS REMOVED IN DATABASE
-    //     //   this.broadcast("nukeMessage", targetMessage.msgId);
-    //     // }
-    //   } catch (err) {
-    //     console.log(err)
-    //     // Sentry.captureException(err)
-    //   }
-    // })
   }
 
   // __ Authenticate user
@@ -639,6 +618,8 @@ export class GameRoom extends Room {
 
   // __ Join user
   onJoin(client: Client, options: any) {
+    console.log('JOIN')
+    console.log(options)
     // __ Make exception for moderator dashboard user
     if (!options.moderator) {
       try {
