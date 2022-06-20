@@ -11,7 +11,7 @@ sudo apt-get update
 sudo apt-get upgrade
 ```
 
-### Install node etc.
+### Install node
 
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
@@ -37,7 +37,7 @@ sudo npm install pm2@latest -g
 ### Start gameserver
 
 ```
-pm2 start ts-node index.ts --name SERVER
+pm2 start run-ts.sh --name SERVER
 pm2 dashboard
 ```
 
