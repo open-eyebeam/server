@@ -4,7 +4,7 @@ Base on `create-colyseus-app`
 
 ## Set up
 
-### Preparation
+Starting from a new install of Ubuntu 20.04
 
 ```
 sudo apt-get update
