@@ -37,6 +37,7 @@ sudo npm install pm2@latest -g
 ### Start gameserver
 
 ```
+npm install / yarn
 pm2 start run-ts.sh --name SERVER
 pm2 dashboard
 ```

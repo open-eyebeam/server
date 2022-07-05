@@ -1,15 +1,15 @@
 import { Room, Client } from "colyseus"
 import { Schema, MapSchema, ArraySchema, type } from "@colyseus/schema"
-import EasyStar from "easystarjs"
+// import EasyStar from "easystarjs"
 // import crypto from "crypto"
 // import querystring from "querystring"
-import fs from "fs"
+// import fs from "fs"
 import get from "lodash/get"
 // import sample from "lodash/sample"
-import clamp from "lodash/clamp"
+// import clamp from "lodash/clamp"
 import isNumber from "lodash/isNumber"
 // import * as Sentry from "@sentry/node"
-import mongoose from "mongoose"
+// import mongoose from "mongoose"
 // import sanity from "@sanity/client"
 
 // const sanityClient = sanity({
@@ -23,11 +23,11 @@ const MAX_STACK_HEIGHT = 200
 const MAX_USERNAME_LENGTH = 100
 const MAX_CHATMESSAGE_LENGTH = 1000
 
-const FIELD_MAP = { WIDTH: 2000, HEIGHT: 2000 }
-const ROOM_MAP = { WIDTH: 500, HEIGHT: 500 }
+// const FIELD_MAP = { WIDTH: 2000, HEIGHT: 2000 }
+// const ROOM_MAP = { WIDTH: 500, HEIGHT: 500 }
 
-const rawdata = fs.readFileSync("grid.json")
-const mapMatrix = JSON.parse(rawdata.toString()).data
+// const rawdata = fs.readFileSync("grid.json")
+// const mapMatrix = JSON.parse(rawdata.toString()).data
 
 // mongoose.connect(MONGODB_URI, {
 //   useUnifiedTopology: true,
@@ -98,11 +98,11 @@ const mapMatrix = JSON.parse(rawdata.toString()).data
 // 9 = teal
 
 // __ Setup collision grid
-const easystar = new EasyStar.js()
-easystar.setGrid(mapMatrix)
-easystar.setAcceptableTiles([0, 2, 3, 4, 5, 6, 7, 8, 9])
-easystar.setTurnPenalty(1)
-easystar.setHeuristicsFactor(2)
+// const easystar = new EasyStar.js()
+// easystar.setGrid(mapMatrix)
+// easystar.setAcceptableTiles([0, 2, 3, 4, 5, 6, 7, 8, 9])
+// easystar.setTurnPenalty(1)
+// easystar.setHeuristicsFactor(2)
 
 class IP extends Schema {
   @type("string") address: string
@@ -152,18 +152,18 @@ class Player extends Schema {
   @type(Path) fullPath: Path = new Path()
 }
 
-class CaseStudy extends Schema {
-  @type("string") uuid: string
-  @type("string") caseStudyId: string
-  @type("string") name: string
-  @type("string") slug: string
-  @type("string") category: string
-  @type("number") age: number
-  @type("number") x: number
-  @type("number") y: number
-  @type("string") carriedBy: string
-  @type("number") timestamp: number
-}
+// class CaseStudy extends Schema {
+//   @type("string") uuid: string
+//   @type("string") caseStudyId: string
+//   @type("string") name: string
+//   @type("string") slug: string
+//   @type("string") category: string
+//   @type("number") age: number
+//   @type("number") x: number
+//   @type("number") y: number
+//   @type("string") carriedBy: string
+//   @type("number") timestamp: number
+// }
 
 class Message extends Schema {
   @type("string") msgId: string
@@ -181,22 +181,22 @@ class Message extends Schema {
 class State extends Schema {
   @type([IP]) blacklist = new ArraySchema<IP>()
   @type({ map: Player }) players = new MapSchema()
-  @type({ map: CaseStudy }) caseStudies = new MapSchema()
+  // @type({ map: CaseStudy }) caseStudies = new MapSchema()
   @type([Message]) messages = new ArraySchema<Message>()
 }
 
-const calculateDirection = (diffX: Number, diffY: Number) => {
-  if (diffX === 0 && diffY === -10) return "front"
-  else if (diffX === 10 && diffY === 0) return "right"
-  else if (diffX === 0 && diffY === 10) return "back"
-  else if (diffX === -10 && diffY === 0) return "left"
-  else if (diffX === 0 && diffY === 0) return "rest"
-  throw new Error("These differences are not valid: " + diffX + ", " + diffY)
-}
+// const calculateDirection = (diffX: Number, diffY: Number) => {
+//   if (diffX === 0 && diffY === -10) return "front"
+//   else if (diffX === 10 && diffY === 0) return "right"
+//   else if (diffX === 0 && diffY === 10) return "back"
+//   else if (diffX === -10 && diffY === 0) return "left"
+//   else if (diffX === 0 && diffY === 0) return "rest"
+//   throw new Error("These differences are not valid: " + diffX + ", " + diffY)
+// }
 
-const getRandomInt = (min: number, max: number) =>
-  Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) +
-  Math.ceil(min)
+// const getRandomInt = (min: number, max: number) =>
+//   Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) +
+//   Math.ceil(min)
 
 export class GameRoom extends Room {
   // __ Global settings
