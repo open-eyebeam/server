@@ -17,7 +17,6 @@ module.exports = {
             name: "GAME-SERVER",
             script: "lib/index.js", // your entrypoint file (typescript needs to be transpiled for this to work)
             instances: os.cpus().length, // one instance for each core
-            instances: 3,
             exec_mode: 'fork', // IMPORTANT: do not use cluster mode.
             env: {
                 DEBUG: "colyseus:errors",
