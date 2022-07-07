@@ -21,6 +21,7 @@ module.exports = {
             env: {
                 DEBUG: "colyseus:errors",
                 NODE_ENV: "production",
+                SELF_HOSTNAME: "localhost"
             }
         }
     ]

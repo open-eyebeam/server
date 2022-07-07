@@ -23,7 +23,11 @@ export function requestJoinOptions(this: Client, i: number) {
     requestNumber: i,
     name: randomName,
     uuid: uuidv4(),
-    avatar: "cd00d2dc-ff93-466a-921b-ad2fc904c9c9",
+    shape: "6ddddafe-4acb-4c52-a59e-34a08aca8b86",
+    onboarded: true,
+    room: "45210a4c-6807-43d9-9e35-55d47dfad271",
+    x: getRandomInt(0, 44),
+    y: getRandomInt(0, 27),
   }
 }
 
