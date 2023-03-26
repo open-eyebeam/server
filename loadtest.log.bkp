@@ -1,0 +1,21 @@
+[3/26/2023, 3:33:37 PM] @colyseus/loadtest
+endpoint: ws://5.161.206.230
+roomName: game
+numClients: 1000
+scriptFile: /home/brent/eyebeam/open-eyebeam/server/loadtest/passive.ts
+delay: 200
+logLevel: all
+output: /home/brent/eyebeam/open-eyebeam/server/loadtest.log
+[3/26/2023, 3:33:37 PM] Error: Bad Gateway
+[3/26/2023, 3:33:37 PM] Error: Bad Gateway
+[3/26/2023, 3:33:37 PM] Error: Bad Gateway
+[3/26/2023, 3:33:37 PM] Error: Bad Gateway
+[3/26/2023, 3:33:38 PM] Error: Bad Gateway
+[3/26/2023, 3:33:38 PM] Error: Bad Gateway
+[3/26/2023, 3:33:38 PM] Error: Bad Gateway
+[3/26/2023, 3:33:38 PM] Error: Bad Gateway
+[3/26/2023, 3:33:38 PM] Error: Bad Gateway
+[3/26/2023, 3:33:39 PM] Finished. Summary:
+Successful connections: 0
+Failed connections: 9
+Total errors: 9

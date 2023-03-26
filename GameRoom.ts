@@ -1,15 +1,15 @@
-import { Room, Client } from "colyseus"
-import { Schema, MapSchema, ArraySchema, type } from "@colyseus/schema"
+import { Room, Client } from "colyseus";
+import { Schema, MapSchema, ArraySchema, type } from "@colyseus/schema";
 // import EasyStar from "easystarjs"
 // import crypto from "crypto"
 // import querystring from "querystring"
-// import fs from "fs"
-import get from "lodash/get"
+import fs from "fs";
+import get from "lodash/get";
 // import sample from "lodash/sample"
 // import clamp from "lodash/clamp"
-import isNumber from "lodash/isNumber"
+import isNumber from "lodash/isNumber";
 // import * as Sentry from "@sentry/node"
-// import mongoose from "mongoose"
+import mongoose from "mongoose";
 // import sanity from "@sanity/client"
 
 // const sanityClient = sanity({
@@ -19,71 +19,71 @@ import isNumber from "lodash/isNumber"
 // })
 
 // const SSO_SECRET = "nwvSuAVLUE5L"
-const MAX_STACK_HEIGHT = 200
-const MAX_USERNAME_LENGTH = 100
-const MAX_CHATMESSAGE_LENGTH = 1000
+const MAX_STACK_HEIGHT = 200;
+const MAX_USERNAME_LENGTH = 100;
+const MAX_CHATMESSAGE_LENGTH = 1000;
 
-// const FIELD_MAP = { WIDTH: 2000, HEIGHT: 2000 }
-// const ROOM_MAP = { WIDTH: 500, HEIGHT: 500 }
+const FIELD_MAP = { WIDTH: 2000, HEIGHT: 2000 };
+const ROOM_MAP = { WIDTH: 500, HEIGHT: 500 };
 
 // const rawdata = fs.readFileSync("grid.json")
 // const mapMatrix = JSON.parse(rawdata.toString()).data
+const MONGODB_URI = "mongodb://localhost:27017";
+mongoose.connect(MONGODB_URI, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
 
-// mongoose.connect(MONGODB_URI, {
-//   useUnifiedTopology: true,
-//   useNewUrlParser: true,
-// })
+const connection = mongoose.connection;
+const MongoSchema = mongoose.Schema;
+const message = new MongoSchema(
+  {
+    text: {
+      type: String,
+    },
+    uuid: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    username: {
+      type: String,
+    },
+    authenticaed: {
+      type: Boolean,
+    },
+    directed: {
+      type: Boolean,
+    },
+    directedTo: {
+      type: String,
+    },
+    msgId: {
+      type: String,
+    },
+    tint: {
+      type: String,
+    },
+    timestamp: {
+      type: Number,
+    },
+    room: {
+      type: String,
+    },
+    removed: {
+      type: Boolean,
+    },
+  },
+  { collection: "Messages" }
+);
 
-// const connection = mongoose.connection
-// const MongoSchema = mongoose.Schema
-// const message = new MongoSchema(
-//   {
-//     text: {
-//       type: String,
-//     },
-//     uuid: {
-//       type: String,
-//     },
-//     name: {
-//       type: String,
-//     },
-//     username: {
-//       type: String,
-//     },
-//     authenticaed: {
-//       type: Boolean,
-//     },
-//     directed: {
-//       type: Boolean,
-//     },
-//     directedTo: {
-//       type: String,
-//     },
-//     msgId: {
-//       type: String,
-//     },
-//     tint: {
-//       type: String,
-//     },
-//     timestamp: {
-//       type: Number,
-//     },
-//     room: {
-//       type: Number,
-//     },
-//     removed: {
-//       type: Boolean,
-//     },
-//   },
-//   { collection: "Messages" }
-// )
+const MongoMessage = mongoose.model("Message", message);
 
-// const MongoMessage = mongoose.model("Message", message)
-
-// console.log('connecting to mongo....')
-// connection.once("open", () => {
-//   console.log("MongoDB database connection established successfully")
-// })
+console.log("connecting to mongo....");
+connection.once("open", () => {
+  console.log("MongoDB database connection established successfully");
+});
 
 // TILE TYPES =>
 // 0 = white
@@ -105,51 +105,51 @@ const MAX_CHATMESSAGE_LENGTH = 1000
 // easystar.setHeuristicsFactor(2)
 
 class IP extends Schema {
-  @type("string") address: string
+  @type("string") address: string;
 }
 
 class Waypoint extends Schema {
-  @type("number") x: number
-  @type("number") y: number
-  @type("number") area: number
-  @type("string") direction: string
+  @type("number") x: number;
+  @type("number") y: number;
+  @type("number") area: number;
+  @type("string") direction: string;
 
   constructor(x: number, y: number, area?: number, direction?: string) {
-    super({})
+    super({});
 
-    this.x = x
-    this.y = y
-    this.area = area
-    this.direction = direction
+    this.x = x;
+    this.y = y;
+    this.area = area;
+    this.direction = direction;
   }
 }
 
 class Path extends Schema {
-  @type("boolean") keyboardNavigation: boolean
-  @type([Waypoint]) waypoints = new ArraySchema<Waypoint>()
+  @type("boolean") keyboardNavigation: boolean;
+  @type([Waypoint]) waypoints = new ArraySchema<Waypoint>();
 }
 
 class Player extends Schema {
-  @type("boolean") moderator: boolean
-  @type("boolean") npc: boolean
-  @type("string") uuid: string
-  @type("string") name: string
-  @type("string") shape: string
-  @type("string") slug: string
-  @type("string") ip: string
-  @type("string") avatar: string
-  @type("boolean") connected: boolean
-  @type("boolean") onboarded: boolean
-  @type("number") x: number
-  @type("number") y: number
-  @type("number") area: number
-  @type("string") room: string
-  @type("boolean") authenticated: boolean
-  @type("string") carrying: string
-  @type("string") viewing: string
-  @type("string") pop: string
-  @type(Path) path: Path = new Path()
-  @type(Path) fullPath: Path = new Path()
+  @type("boolean") moderator: boolean;
+  @type("boolean") npc: boolean;
+  @type("string") uuid: string;
+  @type("string") name: string;
+  @type("string") shape: string;
+  @type("string") slug: string;
+  @type("string") ip: string;
+  @type("string") avatar: string;
+  @type("boolean") connected: boolean;
+  @type("boolean") onboarded: boolean;
+  @type("number") x: number;
+  @type("number") y: number;
+  @type("number") area: number;
+  @type("string") room: string;
+  @type("boolean") authenticated: boolean;
+  @type("string") carrying: string;
+  @type("string") viewing: string;
+  @type("string") pop: string;
+  @type(Path) path: Path = new Path();
+  @type(Path) fullPath: Path = new Path();
 }
 
 // class CaseStudy extends Schema {
@@ -166,23 +166,23 @@ class Player extends Schema {
 // }
 
 class Message extends Schema {
-  @type("string") msgId: string
-  @type("string") uuid: string
-  @type("string") name: string
-  @type("boolean") authenticated: boolean
-  @type("boolean") directed: boolean
-  @type("string") directedTo: string
-  @type("string") text: string
-  @type("number") timestamp: number
-  @type("string") room: string
-  @type("boolean") removed: boolean
+  @type("string") msgId: string;
+  @type("string") uuid: string;
+  @type("string") name: string;
+  @type("boolean") authenticated: boolean;
+  @type("boolean") directed: boolean;
+  @type("string") directedTo: string;
+  @type("string") text: string;
+  @type("number") timestamp: number;
+  @type("string") room: string;
+  @type("boolean") removed: boolean;
 }
 
 class State extends Schema {
-  @type([IP]) blacklist = new ArraySchema<IP>()
-  @type({ map: Player }) players = new MapSchema()
+  @type([IP]) blacklist = new ArraySchema<IP>();
+  @type({ map: Player }) players = new MapSchema();
   // @type({ map: CaseStudy }) caseStudies = new MapSchema()
-  @type([Message]) messages = new ArraySchema<Message>()
+  @type([Message]) messages = new ArraySchema<Message>();
 }
 
 // const calculateDirection = (diffX: Number, diffY: Number) => {
@@ -200,92 +200,87 @@ class State extends Schema {
 
 export class GameRoom extends Room {
   // __ Global settings
-  autoDispose = false
-  maxClients = 700
+  autoDispose = false;
+  maxClients = 700;
 
   onCreate(options: any) {
-    this.setState(new State())
+    this.setState(new State());
 
     // __ Restore messages from database
-    // __ 1 => GET LAST 20 MESSAGES (that are not removed and not broad- or narrowcast) sorted by timestamp
-    // const restoreMessages = async () => {
-    //   console.log('Restoring messages...')
-    //   const messagesToRestore = await MongoMessage.find().sort({ timestamp: 'desc'});
-    //   // console.dir(messagesToRestore)
-    //   console.log('Number of messages:', messagesToRestore.length)
-    //   // // __ 2 => WRITE TO MESSAGE STATE
-    //   messagesToRestore.reverse().forEach((m: Message) => {
-    //     let newMessage = new Message()
-    //     newMessage.msgId = get(m, "msgId", "No msgId")
-    //     newMessage.text = get(m, 'text', '')
-    //     newMessage.name = get(m, "name", "No name")
-    //     newMessage.username = get(m, "username", "")
-    //     newMessage.directed = get(m, "directed", false)
-    //     newMessage.directedTo = get(m, "directedTo",'')
-    //     newMessage.authenticated = get(m, "authenticated",false)
-    //     newMessage.uuid = get(m, "uuid", "No UUID")
-    //     newMessage.tint = get(m, "tint", "No tint")
-    //     newMessage.room = get(m, "room", 2)
-    //     newMessage.timestamp = get(m, "timestamp", Date.now())
-    //     // console.log('==> Write message', m.msgId)
-    //     // console.dir(newMessage)
-    //     this.state.messages.push(newMessage)
-    //   })
-    // }
-    // restoreMessages()
+    //__ 1 => GET LAST 20 MESSAGES (that are not removed and not broad- or narrowcast) sorted by timestamp
+    const restoreMessages = async () => {
+      console.log("Restoring messages...");
+      const messagesToRestore = await MongoMessage.find().sort({ timestamp: "desc" });
+      // console.dir(messagesToRestore)
+      console.log("Number of messages:", messagesToRestore.length);
+      // // __ 2 => WRITE TO MESSAGE STATE
+      messagesToRestore.reverse().forEach((m: Message) => {
+        let newMessage = new Message();
+        newMessage.msgId = get(m, "msgId", "No msgId");
+        newMessage.text = get(m, "text", "");
+        newMessage.name = get(m, "name", "No name");
+        newMessage.username = get(m, "username", "");
+        newMessage.directed = get(m, "directed", false);
+        newMessage.directedTo = get(m, "directedTo", "");
+        newMessage.authenticated = get(m, "authenticated", false);
+        newMessage.uuid = get(m, "uuid", "No UUID");
+        newMessage.tint = get(m, "tint", "No tint");
+        newMessage.room = get(m, "room", 2);
+        newMessage.timestamp = get(m, "timestamp", Date.now());
+        // console.log('==> Write message', m.msgId)
+        // console.dir(newMessage)
+        this.state.messages.push(newMessage);
+      });
+    };
+    restoreMessages();
 
     // __ Blacklist IP address
     this.onMessage("blacklist", (client, payload) => {
       try {
-        if (
-          !this.state.blacklist.find((ip: IP) => ip.address == payload.address)
-        ) {
+        if (!this.state.blacklist.find((ip: IP) => ip.address == payload.address)) {
           // __ Add IP to list
-          let newIP = new IP()
-          newIP.address = payload.address
-          this.state.blacklist.push(newIP)
+          let newIP = new IP();
+          newIP.address = payload.address;
+          this.state.blacklist.push(newIP);
           // __ Check if user with IP exists
           // __ if so, kick out
           // for (let key in this.state.players) {
           this.state.players.forEach((value: Player, key: string) => {
             if (this.state.players[key].ip == newIP.address) {
-              let bannedClient = this.clients.find((c: Client) => c.id === key)
+              let bannedClient = this.clients.find((c: Client) => c.id === key);
               if (bannedClient) {
-                bannedClient.send("banned")
-                bannedClient.leave()
+                bannedClient.send("banned");
+                bannedClient.leave();
               }
-              delete this.state.players[key]
+              delete this.state.players[key];
             }
-          })
+          });
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
         // Sentry.captureException(err)
       }
-    })
+    });
 
     // __ Remove IP address from blacklist
     this.onMessage("whitelist", (client, payload) => {
       try {
-        let newIP = new IP()
-        newIP.address = payload.address
-        const itemIndex = this.state.blacklist.findIndex(
-          (ip: IP) => ip === newIP
-        )
-        this.state.blacklist.splice(itemIndex, 1)
+        let newIP = new IP();
+        newIP.address = payload.address;
+        const itemIndex = this.state.blacklist.findIndex((ip: IP) => ip === newIP);
+        this.state.blacklist.splice(itemIndex, 1);
       } catch (err) {
-        console.log(err)
+        console.log(err);
         // Sentry.captureException(err)
       }
-    })
+    });
 
     // __ Move user to point
     this.onMessage("go", (client, message) => {
-      console.log('___ GOOOOO')
-      console.log(message)
+      console.log("___ GOOOOO");
 
-      this.state.players[client.sessionId].x = message.x
-      this.state.players[client.sessionId].y = message.y
+      this.state.players[client.sessionId].x = message.x;
+      this.state.players[client.sessionId].y = message.y;
       // this.state.players[client.sessionId].area = currentWaypoint.area
       // this.state.players[client.sessionId].path = extendedPath
       // this.state.players[client.sessionId].fullPath = fullPath
@@ -433,7 +428,7 @@ export class GameRoom extends Room {
       //   console.log(err)
       //   // Sentry.captureException(err)
       // }
-    })
+    });
 
     // __ Teleport user to point
     // this.onMessage("teleport", (client, message) => {
@@ -469,113 +464,103 @@ export class GameRoom extends Room {
 
     // __ Change room
     this.onMessage("changeRoom", (client, message) => {
-      console.log('CHANGE ROOM')
-      console.log(message)
+      console.log("CHANGE ROOM");
+      console.log(message);
       if (message.id) {
+        let teleportWaypoint = new Waypoint(message.x, message.y);
+        let teleportPath = new Path();
+        teleportPath.waypoints.push(teleportWaypoint);
 
-        let teleportWaypoint = new Waypoint(
-          message.x,
-          message.y,
-        )
-        let teleportPath = new Path()
-        teleportPath.waypoints.push(teleportWaypoint)
-
-        this.state.players[client.sessionId].room = message.id
-        this.state.players[client.sessionId].x = message.x
-        this.state.players[client.sessionId].y = message.y
-        this.state.players[client.sessionId].path = teleportPath
-        this.state.players[client.sessionId].fullPath = teleportPath
+        this.state.players[client.sessionId].room = message.id;
+        this.state.players[client.sessionId].x = message.x;
+        this.state.players[client.sessionId].y = message.y;
+        this.state.players[client.sessionId].path = teleportPath;
+        this.state.players[client.sessionId].fullPath = teleportPath;
       }
-    })
+    });
 
     // __ Enter Article
     this.onMessage("enterArticle", (client, message) => {
-      console.log('ENTER ARTICLE')
-      console.log(message)
+      console.log("ENTER ARTICLE");
+      console.log(message);
       if (message.id) {
-        this.state.players[client.sessionId].viewing = message.id
+        this.state.players[client.sessionId].viewing = message.id;
       }
-    })
+    });
 
     // __ Leave Article
     this.onMessage("leaveArticle", (client, message) => {
-      console.log('LEAVE ARTICLE')
-      this.state.players[client.sessionId].viewing = ''
-    })
+      console.log("LEAVE ARTICLE");
+      this.state.players[client.sessionId].viewing = "";
+    });
 
     // __ Onboard
     this.onMessage("onboard", (client, message) => {
-      console.log('ONBOARD')
-      this.state.players[client.sessionId].name = message.username
-      this.state.players[client.sessionId].shape = message.shape
-      this.state.players[client.sessionId].onboarded = true
-    })
+      console.log("ONBOARD");
+      this.state.players[client.sessionId].name = message.username;
+      this.state.players[client.sessionId].shape = message.shape;
+      this.state.players[client.sessionId].onboarded = true;
+    });
 
     // __ Add chat message
     this.onMessage("submitChatMessage", (client, payload) => {
       try {
         if (payload.text && payload.text.length > 0) {
           if (this.state.messages.length > MAX_STACK_HEIGHT) {
-            this.state.messages.splice(0, 1)
+            this.state.messages.splice(0, 1);
           }
-          let newMessage = new Message()
-          newMessage.msgId = get(payload, "msgId", "No msgId")
-          newMessage.text = payload.text.substring(0, MAX_CHATMESSAGE_LENGTH)
-          newMessage.name = get(payload, "name", "No name")
-          newMessage.directed = get(payload, "directed", false)
-          newMessage.directedTo = get(payload, "directedTo", '')
-          newMessage.authenticated = get(payload, "authenticated", false)
-          newMessage.uuid = get(payload, "uuid", "No UUID")
-          newMessage.room = get(payload, "room", "field")
-          newMessage.timestamp = Date.now()
-          this.state.messages.push(newMessage)
+          let newMessage = new Message();
+          newMessage.msgId = get(payload, "msgId", "No msgId");
+          newMessage.text = payload.text.substring(0, MAX_CHATMESSAGE_LENGTH);
+          newMessage.name = get(payload, "name", "No name");
+          newMessage.directed = get(payload, "directed", false);
+          newMessage.directedTo = get(payload, "directedTo", "");
+          newMessage.authenticated = get(payload, "authenticated", false);
+          newMessage.uuid = get(payload, "uuid", "No UUID");
+          newMessage.room = get(payload, "room", "field");
+          newMessage.timestamp = Date.now();
+          this.state.messages.push(newMessage);
           // Write to DB
-          // const messageToMongo = new MongoMessage(newMessage)
-          // messageToMongo.save((err) => {
-          //   if (err) {
-          //     console.error(err)
-          //   }
-          // })
+          const messageToMongo = new MongoMessage(newMessage);
+          messageToMongo.save((err) => {
+            if (err) {
+              console.error(err);
+            }
+          });
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
         // Sentry.captureException(err)
       }
-    })
+    });
 
     // __ Remove chat message
     this.onMessage("removeChatMessage", (client, payload) => {
-      console.dir(payload)
-      let targetMessage = this.state.messages.find((m: Message) => m.msgId == payload.msgId)
-      console.dir(targetMessage)
+      console.dir(payload);
+      let targetMessage = this.state.messages.find((m: Message) => m.msgId == payload.msgId);
+      console.dir(targetMessage);
       try {
-        let targetMessageIndex = this.state.messages.findIndex(
-          (m: Message) => m == targetMessage
-        )
-        console.log(targetMessageIndex)
+        let targetMessageIndex = this.state.messages.findIndex((m: Message) => m == targetMessage);
+        console.log(targetMessageIndex);
         if (isNumber(targetMessageIndex)) {
-          this.state.messages.splice(targetMessageIndex, 1)
+          //          this.state.messages.splice(targetMessageIndex, 1)
           // !!! TODO: MARK MESSAGE AS REMOVED IN DATABASE
           this.broadcast("nukeMessage", targetMessage.msgId);
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
         // Sentry.captureException(err)
       }
-    })
+    });
   }
 
   // __ Authenticate user
   onAuth(client: Client, options: any, request: any): Promise<any> {
     return new Promise((resolve, reject) => {
       // __ Check if IP is on blacklist
-      if (
-        !this.state.blacklist.find(
-          (ip: IP) => ip.address == request.headers['x-real-ip']
-        )
-      ) {
+      if (!this.state.blacklist.find((ip: IP) => ip.address == request.headers["x-real-ip"])) {
         // __ Set IP
-        options.ip = request.headers['x-real-ip'] || request.connection.remoteAddress || "6.6.6.6"
+        options.ip = request.headers["x-real-ip"] || request.connection.remoteAddress || "6.6.6.6";
         // __ If user is accredited
         // if (options.sso && options.sig) {
         //   console.log("Authenticate accredited user")
@@ -610,67 +595,39 @@ export class GameRoom extends Room {
         resolve(true);
         // }
       } else {
-        console.log("BANNED")
+        console.log("BANNED");
         reject(); // on black list
       }
-    })
+    });
   }
 
   // __ Join user
   onJoin(client: Client, options: any) {
-    console.log('JOIN')
-    console.log(options)
+    console.log("JOIN");
+    console.log(options);
     // __ Make exception for moderator dashboard user
     if (!options.moderator) {
       try {
-        let startX = get(
-          options,
-          "x",
-          200
-        )
-        let startY = get(
-          options,
-          "y",
-          200
-        )
-        const userName = get(options, "name", "Undefined name").substring(
-          0,
-          MAX_USERNAME_LENGTH
-        )
+        let startX = get(options, "x", 200);
+        let startY = get(options, "y", 200);
+        const userName = get(options, "name", "Undefined name").substring(0, MAX_USERNAME_LENGTH);
 
-        this.state.players[client.sessionId] = new Player()
-        this.state.players[client.sessionId].authenticated =
-          options.authenticated || false
-        this.state.players[client.sessionId].npc = options.npc || false
-        this.state.players[client.sessionId].name = userName
-        this.state.players[client.sessionId].slug = get(
-          options,
-          "slug",
-          "no-slug"
-        )
-        this.state.players[client.sessionId].uuid = get(
-          options,
-          "uuid",
-          "no-uuid"
-        )
-        this.state.players[client.sessionId].ip = get(options, "ip", "6.6.6.6")
-        this.state.players[client.sessionId].avatar = get(
-          options,
-          "avatar",
-          "Undefined avatar id"
-        )
-        this.state.players[client.sessionId].connected = true
-        this.state.players[client.sessionId].onboarded = options.onboarded
-        this.state.players[client.sessionId].shape = options.shape
-        this.state.players[client.sessionId].x = startX
-        this.state.players[client.sessionId].y = startY
-        this.state.players[client.sessionId].room = get(
-          options,
-          "room",
-          "NO ROOM"
-        )
+        this.state.players[client.sessionId] = new Player();
+        this.state.players[client.sessionId].authenticated = options.authenticated || false;
+        this.state.players[client.sessionId].npc = options.npc || false;
+        this.state.players[client.sessionId].name = userName;
+        this.state.players[client.sessionId].slug = get(options, "slug", "no-slug");
+        this.state.players[client.sessionId].uuid = get(options, "uuid", "no-uuid");
+        this.state.players[client.sessionId].ip = get(options, "ip", "6.6.6.6");
+        this.state.players[client.sessionId].avatar = get(options, "avatar", "Undefined avatar id");
+        this.state.players[client.sessionId].connected = true;
+        this.state.players[client.sessionId].onboarded = options.onboarded;
+        this.state.players[client.sessionId].shape = options.shape;
+        this.state.players[client.sessionId].x = startX;
+        this.state.players[client.sessionId].y = startY;
+        this.state.players[client.sessionId].room = get(options, "room", "NO ROOM");
       } catch (err) {
-        console.log(err)
+        console.log(err);
         // Sentry.captureException(err)
       }
     }
@@ -678,12 +635,12 @@ export class GameRoom extends Room {
 
   // __ Leave user
   async onLeave(client: Client, consented: boolean) {
-    console.log('A PLAYER LEFT')
-    delete this.state.players[client.sessionId]
+    console.log("A PLAYER LEFT");
+    delete this.state.players[client.sessionId];
   }
 
   // __ Dispose game room
   onDispose() {
-    console.log("game room disposed")
+    console.log("game room disposed");
   }
 }

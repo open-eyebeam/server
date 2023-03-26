@@ -1,0 +1,497 @@
+[3/26/2023, 3:33:45 PM] @colyseus/loadtest
+endpoint: ws://5.161.206.230
+roomName: game
+numClients: 1000
+scriptFile: /home/brent/eyebeam/open-eyebeam/server/loadtest/passive.ts
+delay: 200
+logLevel: all
+output: /home/brent/eyebeam/open-eyebeam/server/loadtest.log
+[3/26/2023, 3:35:08 PM] Error: socket hang up
+[3/26/2023, 3:35:08 PM] Error: socket hang up
+[3/26/2023, 3:35:08 PM] Error: socket hang up
+[3/26/2023, 3:35:09 PM] Error: socket hang up
+[3/26/2023, 3:35:09 PM] Error: socket hang up
+[3/26/2023, 3:35:09 PM] Error: socket hang up
+[3/26/2023, 3:35:09 PM] Error: socket hang up
+[3/26/2023, 3:35:09 PM] Error: socket hang up
+[3/26/2023, 3:35:10 PM] Error: socket hang up
+[3/26/2023, 3:35:10 PM] Error: socket hang up
+[3/26/2023, 3:35:10 PM] Error: socket hang up
+[3/26/2023, 3:35:10 PM] Error: socket hang up
+[3/26/2023, 3:35:10 PM] Error: socket hang up
+[3/26/2023, 3:35:11 PM] Error: socket hang up
+[3/26/2023, 3:35:11 PM] Error: socket hang up
+[3/26/2023, 3:35:11 PM] Error: socket hang up
+[3/26/2023, 3:35:11 PM] Error: socket hang up
+[3/26/2023, 3:35:12 PM] Error: socket hang up
+[3/26/2023, 3:35:12 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:12 PM] Error: socket hang up
+[3/26/2023, 3:35:12 PM] Error: socket hang up
+[3/26/2023, 3:35:12 PM] Error: socket hang up
+[3/26/2023, 3:35:13 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:13 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:13 PM] Error: socket hang up
+[3/26/2023, 3:35:13 PM] ServerError
+[3/26/2023, 3:35:13 PM] Error: socket hang up
+[3/26/2023, 3:35:14 PM] Error: socket hang up
+[3/26/2023, 3:35:14 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:14 PM] Error: socket hang up
+[3/26/2023, 3:35:14 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:14 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:15 PM] Error: socket hang up
+[3/26/2023, 3:35:15 PM] Error: socket hang up
+[3/26/2023, 3:35:15 PM] Error: socket hang up
+[3/26/2023, 3:35:16 PM] Error: socket hang up
+[3/26/2023, 3:35:16 PM] Error: socket hang up
+[3/26/2023, 3:35:16 PM] Error: socket hang up
+[3/26/2023, 3:35:16 PM] Error: socket hang up
+[3/26/2023, 3:35:17 PM] Error: socket hang up
+[3/26/2023, 3:35:17 PM] Error: socket hang up
+[3/26/2023, 3:35:17 PM] Error: socket hang up
+[3/26/2023, 3:35:17 PM] Error: socket hang up
+[3/26/2023, 3:35:18 PM] Error: socket hang up
+[3/26/2023, 3:35:18 PM] Error: socket hang up
+[3/26/2023, 3:35:18 PM] Error: socket hang up
+[3/26/2023, 3:35:18 PM] Error: socket hang up
+[3/26/2023, 3:35:19 PM] Error: socket hang up
+[3/26/2023, 3:35:19 PM] ServerError
+[3/26/2023, 3:35:19 PM] Error: socket hang up
+[3/26/2023, 3:35:19 PM] Error: socket hang up
+[3/26/2023, 3:35:19 PM] Error: socket hang up
+[3/26/2023, 3:35:20 PM] ServerError
+[3/26/2023, 3:35:20 PM] Error: socket hang up
+[3/26/2023, 3:35:20 PM] Error: socket hang up
+[3/26/2023, 3:35:20 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:20 PM] Error: socket hang up
+[3/26/2023, 3:35:21 PM] Error: socket hang up
+[3/26/2023, 3:35:21 PM] Error: socket hang up
+[3/26/2023, 3:35:21 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:21 PM] Error: socket hang up
+[3/26/2023, 3:35:21 PM] Error: socket hang up
+[3/26/2023, 3:35:22 PM] Error: socket hang up
+[3/26/2023, 3:35:22 PM] Error: socket hang up
+[3/26/2023, 3:35:22 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:22 PM] Error: socket hang up
+[3/26/2023, 3:35:23 PM] Error: socket hang up
+[3/26/2023, 3:35:23 PM] Error: socket hang up
+[3/26/2023, 3:35:23 PM] Error: socket hang up
+[3/26/2023, 3:35:23 PM] Error: socket hang up
+[3/26/2023, 3:35:23 PM] Error: socket hang up
+[3/26/2023, 3:35:24 PM] Error: socket hang up
+[3/26/2023, 3:35:24 PM] ServerError
+[3/26/2023, 3:35:24 PM] Error: socket hang up
+[3/26/2023, 3:35:24 PM] Error: socket hang up
+[3/26/2023, 3:35:25 PM] Error: socket hang up
+[3/26/2023, 3:35:25 PM] Error: socket hang up
+[3/26/2023, 3:35:25 PM] Error: socket hang up
+[3/26/2023, 3:35:25 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:25 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:26 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:26 PM] Error: socket hang up
+[3/26/2023, 3:35:26 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:26 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:27 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:27 PM] Error: socket hang up
+[3/26/2023, 3:35:27 PM] Error: socket hang up
+[3/26/2023, 3:35:27 PM] Error: socket hang up
+[3/26/2023, 3:35:27 PM] Error: socket hang up
+[3/26/2023, 3:35:28 PM] ServerError
+[3/26/2023, 3:35:28 PM] Error: socket hang up
+[3/26/2023, 3:35:28 PM] Error: socket hang up
+[3/26/2023, 3:35:28 PM] Error: socket hang up
+[3/26/2023, 3:35:28 PM] Error: socket hang up
+[3/26/2023, 3:35:29 PM] Error: socket hang up
+[3/26/2023, 3:35:29 PM] Error: socket hang up
+[3/26/2023, 3:35:29 PM] ServerError
+[3/26/2023, 3:35:29 PM] Error: socket hang up
+[3/26/2023, 3:35:29 PM] Error: socket hang up
+[3/26/2023, 3:35:30 PM] Error: socket hang up
+[3/26/2023, 3:35:30 PM] Error: socket hang up
+[3/26/2023, 3:35:30 PM] Error: socket hang up
+[3/26/2023, 3:35:30 PM] Error: socket hang up
+[3/26/2023, 3:35:31 PM] Error: socket hang up
+[3/26/2023, 3:35:31 PM] Error: socket hang up
+[3/26/2023, 3:35:31 PM] Error: socket hang up
+[3/26/2023, 3:35:31 PM] Error: socket hang up
+[3/26/2023, 3:35:31 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:32 PM] Error: socket hang up
+[3/26/2023, 3:35:32 PM] Error: socket hang up
+[3/26/2023, 3:35:32 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:32 PM] Error: socket hang up
+[3/26/2023, 3:35:33 PM] Error: socket hang up
+[3/26/2023, 3:35:33 PM] Error: socket hang up
+[3/26/2023, 3:35:33 PM] Error: socket hang up
+[3/26/2023, 3:35:33 PM] Error: socket hang up
+[3/26/2023, 3:35:33 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:34 PM] Error: socket hang up
+[3/26/2023, 3:35:34 PM] Error: socket hang up
+[3/26/2023, 3:35:34 PM] Error: socket hang up
+[3/26/2023, 3:35:34 PM] Error: socket hang up
+[3/26/2023, 3:35:35 PM] Error: socket hang up
+[3/26/2023, 3:35:35 PM] Error: socket hang up
+[3/26/2023, 3:35:35 PM] ServerError
+[3/26/2023, 3:35:35 PM] Error: socket hang up
+[3/26/2023, 3:35:35 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:36 PM] Error: socket hang up
+[3/26/2023, 3:35:36 PM] Error: socket hang up
+[3/26/2023, 3:35:36 PM] Error: socket hang up
+[3/26/2023, 3:35:36 PM] Error: socket hang up
+[3/26/2023, 3:35:37 PM] Error: socket hang up
+[3/26/2023, 3:35:37 PM] Error: socket hang up
+[3/26/2023, 3:35:37 PM] Error: socket hang up
+[3/26/2023, 3:35:37 PM] Error: socket hang up
+[3/26/2023, 3:35:37 PM] Error: socket hang up
+[3/26/2023, 3:35:38 PM] Error: socket hang up
+[3/26/2023, 3:35:39 PM] Error: socket hang up
+[3/26/2023, 3:35:39 PM] Error: socket hang up
+[3/26/2023, 3:35:39 PM] Error: socket hang up
+[3/26/2023, 3:35:39 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:39 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:39 PM] Error: socket hang up
+[3/26/2023, 3:35:40 PM] Error: socket hang up
+[3/26/2023, 3:35:40 PM] Error: socket hang up
+[3/26/2023, 3:35:40 PM] Error: socket hang up
+[3/26/2023, 3:35:40 PM] Error: socket hang up
+[3/26/2023, 3:35:41 PM] Error: socket hang up
+[3/26/2023, 3:35:41 PM] Error: socket hang up
+[3/26/2023, 3:35:41 PM] Error: socket hang up
+[3/26/2023, 3:35:41 PM] Error: socket hang up
+[3/26/2023, 3:35:41 PM] Error: socket hang up
+[3/26/2023, 3:35:42 PM] Error: socket hang up
+[3/26/2023, 3:35:42 PM] Error: socket hang up
+[3/26/2023, 3:35:42 PM] Error: socket hang up
+[3/26/2023, 3:35:42 PM] Error: socket hang up
+[3/26/2023, 3:35:43 PM] Error: socket hang up
+[3/26/2023, 3:35:43 PM] Error: socket hang up
+[3/26/2023, 3:35:43 PM] Error: socket hang up
+[3/26/2023, 3:35:43 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:43 PM] Error: socket hang up
+[3/26/2023, 3:35:44 PM] Error: socket hang up
+[3/26/2023, 3:35:44 PM] Error: socket hang up
+[3/26/2023, 3:35:44 PM] Error: socket hang up
+[3/26/2023, 3:35:44 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:45 PM] Error: socket hang up
+[3/26/2023, 3:35:45 PM] Error: socket hang up
+[3/26/2023, 3:35:45 PM] Error: socket hang up
+[3/26/2023, 3:35:45 PM] Error: socket hang up
+[3/26/2023, 3:35:46 PM] ServerError
+[3/26/2023, 3:35:46 PM] Error: socket hang up
+[3/26/2023, 3:35:46 PM] Error: socket hang up
+[3/26/2023, 3:35:46 PM] Error: socket hang up
+[3/26/2023, 3:35:47 PM] Error: socket hang up
+[3/26/2023, 3:35:47 PM] Error: socket hang up
+[3/26/2023, 3:35:47 PM] Error: socket hang up
+[3/26/2023, 3:35:47 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:47 PM] Error: socket hang up
+[3/26/2023, 3:35:48 PM] Error: socket hang up
+[3/26/2023, 3:35:48 PM] Error: socket hang up
+[3/26/2023, 3:35:48 PM] Error: socket hang up
+[3/26/2023, 3:35:48 PM] ServerError
+[3/26/2023, 3:35:48 PM] Error: socket hang up
+[3/26/2023, 3:35:49 PM] Error: socket hang up
+[3/26/2023, 3:35:49 PM] Error: socket hang up
+[3/26/2023, 3:35:49 PM] Error: socket hang up
+[3/26/2023, 3:35:49 PM] ServerError
+[3/26/2023, 3:35:50 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:50 PM] Error: socket hang up
+[3/26/2023, 3:35:50 PM] Error: socket hang up
+[3/26/2023, 3:35:50 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:51 PM] Error: socket hang up
+[3/26/2023, 3:35:51 PM] Error: socket hang up
+[3/26/2023, 3:35:51 PM] Error: socket hang up
+[3/26/2023, 3:35:51 PM] ServerError
+[3/26/2023, 3:35:51 PM] Error: socket hang up
+[3/26/2023, 3:35:52 PM] Error: socket hang up
+[3/26/2023, 3:35:52 PM] Error: socket hang up
+[3/26/2023, 3:35:52 PM] ServerError
+[3/26/2023, 3:35:52 PM] Error: socket hang up
+[3/26/2023, 3:35:52 PM] Error: socket hang up
+[3/26/2023, 3:35:53 PM] Error: socket hang up
+[3/26/2023, 3:35:53 PM] Error: socket hang up
+[3/26/2023, 3:35:53 PM] Error: socket hang up
+[3/26/2023, 3:35:53 PM] Error: socket hang up
+[3/26/2023, 3:35:54 PM] Error: socket hang up
+[3/26/2023, 3:35:54 PM] Error: socket hang up
+[3/26/2023, 3:35:54 PM] Error: socket hang up
+[3/26/2023, 3:35:54 PM] Error: socket hang up
+[3/26/2023, 3:35:55 PM] Error: socket hang up
+[3/26/2023, 3:35:55 PM] Error: socket hang up
+[3/26/2023, 3:35:55 PM] Error: socket hang up
+[3/26/2023, 3:35:55 PM] Error: socket hang up
+[3/26/2023, 3:35:56 PM] Error: socket hang up
+[3/26/2023, 3:35:56 PM] Error: socket hang up
+[3/26/2023, 3:35:57 PM] Error: socket hang up
+[3/26/2023, 3:35:57 PM] Error: socket hang up
+[3/26/2023, 3:35:57 PM] Error: socket hang up
+[3/26/2023, 3:35:57 PM] Error: socket hang up
+[3/26/2023, 3:35:58 PM] Error: socket hang up
+[3/26/2023, 3:35:58 PM] Error: socket hang up
+[3/26/2023, 3:35:58 PM] Error: read ECONNRESET
+[3/26/2023, 3:35:58 PM] Error: socket hang up
+[3/26/2023, 3:35:59 PM] Error: socket hang up
+[3/26/2023, 3:35:59 PM] Error: socket hang up
+[3/26/2023, 3:35:59 PM] Error: socket hang up
+[3/26/2023, 3:36:00 PM] Error: socket hang up
+[3/26/2023, 3:36:00 PM] Error: socket hang up
+[3/26/2023, 3:36:00 PM] Error: socket hang up
+[3/26/2023, 3:36:00 PM] ServerError
+[3/26/2023, 3:36:01 PM] Error: socket hang up
+[3/26/2023, 3:36:01 PM] Error: socket hang up
+[3/26/2023, 3:36:01 PM] Error: socket hang up
+[3/26/2023, 3:36:01 PM] Error: socket hang up
+[3/26/2023, 3:36:02 PM] Error: socket hang up
+[3/26/2023, 3:36:02 PM] Error: socket hang up
+[3/26/2023, 3:36:02 PM] Error: socket hang up
+[3/26/2023, 3:36:02 PM] Error: socket hang up
+[3/26/2023, 3:36:02 PM] Error: socket hang up
+[3/26/2023, 3:36:03 PM] Error: socket hang up
+[3/26/2023, 3:36:03 PM] Error: socket hang up
+[3/26/2023, 3:36:03 PM] Error: socket hang up
+[3/26/2023, 3:36:03 PM] Error: socket hang up
+[3/26/2023, 3:36:03 PM] Error: socket hang up
+[3/26/2023, 3:36:04 PM] Error: socket hang up
+[3/26/2023, 3:36:04 PM] Error: read ECONNRESET
+[3/26/2023, 3:36:04 PM] Error: socket hang up
+[3/26/2023, 3:36:05 PM] Error: socket hang up
+[3/26/2023, 3:36:05 PM] Error: socket hang up
+[3/26/2023, 3:36:05 PM] Error: socket hang up
+[3/26/2023, 3:36:05 PM] Error: socket hang up
+[3/26/2023, 3:36:06 PM] Error: socket hang up
+[3/26/2023, 3:36:06 PM] Error: socket hang up
+[3/26/2023, 3:36:06 PM] Error: socket hang up
+[3/26/2023, 3:36:07 PM] Error: socket hang up
+[3/26/2023, 3:36:07 PM] Error: socket hang up
+[3/26/2023, 3:36:07 PM] Error: socket hang up
+[3/26/2023, 3:36:07 PM] Error: socket hang up
+[3/26/2023, 3:36:08 PM] Error: socket hang up
+[3/26/2023, 3:36:08 PM] Error: socket hang up
+[3/26/2023, 3:36:08 PM] Error: socket hang up
+[3/26/2023, 3:36:08 PM] ServerError
+[3/26/2023, 3:36:09 PM] ServerError
+[3/26/2023, 3:36:09 PM] Error: socket hang up
+[3/26/2023, 3:36:09 PM] ServerError
+[3/26/2023, 3:36:09 PM] Error: socket hang up
+[3/26/2023, 3:36:10 PM] Error: socket hang up
+[3/26/2023, 3:36:10 PM] Error: socket hang up
+[3/26/2023, 3:36:10 PM] Error: read ECONNRESET
+[3/26/2023, 3:36:11 PM] Error: socket hang up
+[3/26/2023, 3:36:11 PM] Error: socket hang up
+[3/26/2023, 3:36:11 PM] ServerError
+[3/26/2023, 3:36:11 PM] Error: socket hang up
+[3/26/2023, 3:36:13 PM] Error: socket hang up
+[3/26/2023, 3:36:13 PM] Error: socket hang up
+[3/26/2023, 3:36:13 PM] Error: socket hang up
+[3/26/2023, 3:36:13 PM] ServerError
+[3/26/2023, 3:36:14 PM] Error: socket hang up
+[3/26/2023, 3:36:14 PM] Error: socket hang up
+[3/26/2023, 3:36:15 PM] Error: socket hang up
+[3/26/2023, 3:36:15 PM] Error: socket hang up
+[3/26/2023, 3:36:15 PM] Error: socket hang up
+[3/26/2023, 3:36:15 PM] Error: socket hang up
+[3/26/2023, 3:36:16 PM] Error: socket hang up
+[3/26/2023, 3:36:16 PM] Error: socket hang up
+[3/26/2023, 3:36:16 PM] Error: socket hang up
+[3/26/2023, 3:36:17 PM] Error: socket hang up
+[3/26/2023, 3:36:17 PM] Error: socket hang up
+[3/26/2023, 3:36:17 PM] Error: socket hang up
+[3/26/2023, 3:36:17 PM] Error: socket hang up
+[3/26/2023, 3:36:17 PM] Error: socket hang up
+[3/26/2023, 3:36:18 PM] Error: socket hang up
+[3/26/2023, 3:36:18 PM] Error: socket hang up
+[3/26/2023, 3:36:18 PM] Error: socket hang up
+[3/26/2023, 3:36:18 PM] Error: socket hang up
+[3/26/2023, 3:36:19 PM] Error: socket hang up
+[3/26/2023, 3:36:19 PM] Error: socket hang up
+[3/26/2023, 3:36:20 PM] Error: socket hang up
+[3/26/2023, 3:36:20 PM] Error: socket hang up
+[3/26/2023, 3:36:20 PM] ServerError
+[3/26/2023, 3:36:20 PM] Error: socket hang up
+[3/26/2023, 3:36:21 PM] Error: socket hang up
+[3/26/2023, 3:36:21 PM] Error: socket hang up
+[3/26/2023, 3:36:21 PM] Error: read ECONNRESET
+[3/26/2023, 3:36:21 PM] Error: socket hang up
+[3/26/2023, 3:36:22 PM] Error: socket hang up
+[3/26/2023, 3:36:22 PM] Error: socket hang up
+[3/26/2023, 3:36:22 PM] Error: socket hang up
+[3/26/2023, 3:36:23 PM] Error: socket hang up
+[3/26/2023, 3:36:23 PM] ServerError
+[3/26/2023, 3:36:23 PM] Error: socket hang up
+[3/26/2023, 3:36:24 PM] Error: socket hang up
+[3/26/2023, 3:36:24 PM] Error: socket hang up
+[3/26/2023, 3:36:24 PM] Error: socket hang up
+[3/26/2023, 3:36:24 PM] Error: read ECONNRESET
+[3/26/2023, 3:36:24 PM] Error: socket hang up
+[3/26/2023, 3:36:25 PM] Error: socket hang up
+[3/26/2023, 3:36:25 PM] Error: socket hang up
+[3/26/2023, 3:36:25 PM] Error: socket hang up
+[3/26/2023, 3:36:27 PM] Error: socket hang up
+[3/26/2023, 3:36:27 PM] Error: socket hang up
+[3/26/2023, 3:36:28 PM] ServerError
+[3/26/2023, 3:36:28 PM] Error: socket hang up
+[3/26/2023, 3:36:29 PM] Error: socket hang up
+[3/26/2023, 3:36:29 PM] Error: socket hang up
+[3/26/2023, 3:36:29 PM] Error: socket hang up
+[3/26/2023, 3:36:30 PM] Error: socket hang up
+[3/26/2023, 3:36:30 PM] Error: socket hang up
+[3/26/2023, 3:36:30 PM] Error: socket hang up
+[3/26/2023, 3:36:30 PM] Error: read ECONNRESET
+[3/26/2023, 3:36:31 PM] Error: socket hang up
+[3/26/2023, 3:36:31 PM] Error: socket hang up
+[3/26/2023, 3:36:31 PM] Error: socket hang up
+[3/26/2023, 3:36:32 PM] Error: socket hang up
+[3/26/2023, 3:36:33 PM] Error: socket hang up
+[3/26/2023, 3:36:33 PM] ServerError
+[3/26/2023, 3:36:33 PM] Error: socket hang up
+[3/26/2023, 3:36:33 PM] Error: socket hang up
+[3/26/2023, 3:36:33 PM] Error: socket hang up
+[3/26/2023, 3:36:33 PM] Error: socket hang up
+[3/26/2023, 3:36:33 PM] Error: read ECONNRESET
+[3/26/2023, 3:36:34 PM] Error: socket hang up
+[3/26/2023, 3:36:34 PM] Error: socket hang up
+[3/26/2023, 3:36:34 PM] Error: socket hang up
+[3/26/2023, 3:36:35 PM] Error: socket hang up
+[3/26/2023, 3:36:35 PM] Error: socket hang up
+[3/26/2023, 3:36:35 PM] ServerError
+[3/26/2023, 3:36:36 PM] Error: socket hang up
+[3/26/2023, 3:36:36 PM] Error: socket hang up
+[3/26/2023, 3:36:36 PM] Error: socket hang up
+[3/26/2023, 3:36:36 PM] Error: read ECONNRESET
+[3/26/2023, 3:36:37 PM] Error: socket hang up
+[3/26/2023, 3:36:37 PM] Error: socket hang up
+[3/26/2023, 3:36:37 PM] Error: socket hang up
+[3/26/2023, 3:36:38 PM] Error: socket hang up
+[3/26/2023, 3:36:38 PM] Error: socket hang up
+[3/26/2023, 3:36:39 PM] Error: socket hang up
+[3/26/2023, 3:36:40 PM] Error: socket hang up
+[3/26/2023, 3:36:40 PM] Error: socket hang up
+[3/26/2023, 3:36:40 PM] Error: socket hang up
+[3/26/2023, 3:36:40 PM] Error: socket hang up
+[3/26/2023, 3:36:41 PM] Error: socket hang up
+[3/26/2023, 3:36:41 PM] Error: socket hang up
+[3/26/2023, 3:36:42 PM] Error: socket hang up
+[3/26/2023, 3:36:42 PM] Error: socket hang up
+[3/26/2023, 3:36:42 PM] Error: socket hang up
+[3/26/2023, 3:36:43 PM] Error: socket hang up
+[3/26/2023, 3:36:43 PM] Error: socket hang up
+[3/26/2023, 3:36:43 PM] Error: socket hang up
+[3/26/2023, 3:36:44 PM] Error: socket hang up
+[3/26/2023, 3:36:44 PM] Error: socket hang up
+[3/26/2023, 3:36:44 PM] ServerError
+[3/26/2023, 3:36:45 PM] Error: socket hang up
+[3/26/2023, 3:36:45 PM] Error: socket hang up
+[3/26/2023, 3:36:46 PM] Error: socket hang up
+[3/26/2023, 3:36:46 PM] ServerError
+[3/26/2023, 3:36:47 PM] Error: socket hang up
+[3/26/2023, 3:36:47 PM] Error: socket hang up
+[3/26/2023, 3:36:48 PM] Error: socket hang up
+[3/26/2023, 3:36:48 PM] Error: socket hang up
+[3/26/2023, 3:36:48 PM] Error: socket hang up
+[3/26/2023, 3:36:49 PM] Error: socket hang up
+[3/26/2023, 3:36:49 PM] Error: socket hang up
+[3/26/2023, 3:36:49 PM] Error: socket hang up
+[3/26/2023, 3:36:50 PM] Error: socket hang up
+[3/26/2023, 3:36:50 PM] Error: socket hang up
+[3/26/2023, 3:36:52 PM] Error: socket hang up
+[3/26/2023, 3:36:52 PM] Error: socket hang up
+[3/26/2023, 3:36:52 PM] Error: socket hang up
+[3/26/2023, 3:36:52 PM] Error: socket hang up
+[3/26/2023, 3:36:53 PM] ServerError
+[3/26/2023, 3:36:53 PM] Error: socket hang up
+[3/26/2023, 3:36:54 PM] Error: socket hang up
+[3/26/2023, 3:36:54 PM] ServerError
+[3/26/2023, 3:36:54 PM] Error: socket hang up
+[3/26/2023, 3:36:55 PM] Error: socket hang up
+[3/26/2023, 3:36:55 PM] Error: socket hang up
+[3/26/2023, 3:36:55 PM] Error: socket hang up
+[3/26/2023, 3:36:55 PM] Error: socket hang up
+[3/26/2023, 3:36:55 PM] Error: socket hang up
+[3/26/2023, 3:36:56 PM] ServerError
+[3/26/2023, 3:36:56 PM] Error: socket hang up
+[3/26/2023, 3:36:56 PM] Error: socket hang up
+[3/26/2023, 3:36:57 PM] ServerError
+[3/26/2023, 3:36:57 PM] Error: socket hang up
+[3/26/2023, 3:36:57 PM] Error: socket hang up
+[3/26/2023, 3:36:57 PM] Error: socket hang up
+[3/26/2023, 3:36:58 PM] Error: socket hang up
+[3/26/2023, 3:36:58 PM] Error: socket hang up
+[3/26/2023, 3:36:58 PM] ServerError
+[3/26/2023, 3:36:59 PM] Error: socket hang up
+[3/26/2023, 3:36:59 PM] Error: socket hang up
+[3/26/2023, 3:37:00 PM] Error: socket hang up
+[3/26/2023, 3:37:00 PM] ServerError
+[3/26/2023, 3:37:00 PM] Error: socket hang up
+[3/26/2023, 3:37:01 PM] Error: socket hang up
+[3/26/2023, 3:37:01 PM] Error: socket hang up
+[3/26/2023, 3:37:02 PM] Error: socket hang up
+[3/26/2023, 3:37:04 PM] Error: socket hang up
+[3/26/2023, 3:37:04 PM] Error: socket hang up
+[3/26/2023, 3:37:04 PM] Error: socket hang up
+[3/26/2023, 3:37:04 PM] Error: socket hang up
+[3/26/2023, 3:37:04 PM] Error: socket hang up
+[3/26/2023, 3:37:06 PM] Error: socket hang up
+[3/26/2023, 3:37:06 PM] Error: socket hang up
+[3/26/2023, 3:37:06 PM] Error: socket hang up
+[3/26/2023, 3:37:06 PM] Error: socket hang up
+[3/26/2023, 3:37:07 PM] Error: socket hang up
+[3/26/2023, 3:37:07 PM] Error: socket hang up
+[3/26/2023, 3:37:07 PM] Error: socket hang up
+[3/26/2023, 3:37:08 PM] Error: socket hang up
+[3/26/2023, 3:37:08 PM] Error: socket hang up
+[3/26/2023, 3:37:09 PM] Error: socket hang up
+[3/26/2023, 3:37:10 PM] Error: socket hang up
+[3/26/2023, 3:37:10 PM] Error: socket hang up
+[3/26/2023, 3:37:10 PM] Error: socket hang up
+[3/26/2023, 3:37:10 PM] Error: socket hang up
+[3/26/2023, 3:37:10 PM] Error: socket hang up
+[3/26/2023, 3:37:12 PM] Error: socket hang up
+[3/26/2023, 3:37:13 PM] Error: socket hang up
+[3/26/2023, 3:37:14 PM] Error: socket hang up
+[3/26/2023, 3:37:14 PM] Error: socket hang up
+[3/26/2023, 3:37:14 PM] ServerError
+[3/26/2023, 3:37:15 PM] Error: socket hang up
+[3/26/2023, 3:37:16 PM] ServerError
+[3/26/2023, 3:37:16 PM] Error: socket hang up
+[3/26/2023, 3:37:16 PM] Error: socket hang up
+[3/26/2023, 3:37:16 PM] Error: socket hang up
+[3/26/2023, 3:37:17 PM] Error: socket hang up
+[3/26/2023, 3:37:18 PM] Error: socket hang up
+[3/26/2023, 3:37:18 PM] Error: socket hang up
+[3/26/2023, 3:37:18 PM] Error: socket hang up
+[3/26/2023, 3:37:18 PM] Error: socket hang up
+[3/26/2023, 3:37:18 PM] Error: socket hang up
+[3/26/2023, 3:37:19 PM] Error: socket hang up
+[3/26/2023, 3:37:19 PM] Error: socket hang up
+[3/26/2023, 3:37:19 PM] Error: socket hang up
+[3/26/2023, 3:37:20 PM] Error: socket hang up
+[3/26/2023, 3:37:20 PM] Error: socket hang up
+[3/26/2023, 3:37:22 PM] Error: socket hang up
+[3/26/2023, 3:37:22 PM] Error: socket hang up
+[3/26/2023, 3:37:22 PM] Error: socket hang up
+[3/26/2023, 3:37:22 PM] Error: socket hang up
+[3/26/2023, 3:37:23 PM] Error: read ECONNRESET
+[3/26/2023, 3:37:24 PM] Error: socket hang up
+[3/26/2023, 3:37:24 PM] Error: socket hang up
+[3/26/2023, 3:37:25 PM] Error: socket hang up
+[3/26/2023, 3:37:25 PM] ServerError
+[3/26/2023, 3:37:26 PM] Error: socket hang up
+[3/26/2023, 3:37:26 PM] ServerError
+[3/26/2023, 3:37:27 PM] Error: socket hang up
+[3/26/2023, 3:37:27 PM] ServerError
+[3/26/2023, 3:37:27 PM] Error: socket hang up
+[3/26/2023, 3:37:28 PM] Error: socket hang up
+[3/26/2023, 3:37:28 PM] ServerError
+[3/26/2023, 3:37:30 PM] Error: socket hang up
+[3/26/2023, 3:37:30 PM] ServerError
+[3/26/2023, 3:37:31 PM] Error: socket hang up
+[3/26/2023, 3:37:31 PM] Error: socket hang up
+[3/26/2023, 3:37:31 PM] Error: socket hang up
+[3/26/2023, 3:37:31 PM] Error: socket hang up
+[3/26/2023, 3:37:32 PM] Error: socket hang up
+[3/26/2023, 3:37:32 PM] Error: socket hang up
+[3/26/2023, 3:37:32 PM] Error: socket hang up
+[3/26/2023, 3:37:32 PM] Error: socket hang up
+[3/26/2023, 3:37:33 PM] Error: socket hang up
+[3/26/2023, 3:37:34 PM] Finished. Summary:
+Successful connections: 403
+Failed connections: 485
+Total errors: 485
